@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "282734223775",
+    "project_id": "doctr-fb5bb",
+    "storage_bucket": "doctr-fb5bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282734223775:android:0a8bacef7c6e61f554ddaa",
+        "android_client_info": {
+          "package_name": "com.example.doctr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282734223775-c6kocdor80fu8l0srn3uonevnosq7bh6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9Yyf6iBWEJ6rvXxD183PRSMsOSC93KpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282734223775-c6kocdor80fu8l0srn3uonevnosq7bh6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
