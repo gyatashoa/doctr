@@ -4,27 +4,34 @@ import 'package:stacked/stacked.dart';
 
 class LoginViewModel extends FormViewModel {
   bool _viewPassword = false;
-  bool _loading = false;
+  bool _loginloading = false;
+  bool _loginwithGoogleloading = false;
 
   bool get viewPassword => _viewPassword;
-  bool get isLoading => _loading;
+  bool get isLoginLoading => _loginloading;
+  bool get isLoginwithGoogleLoading => _loginwithGoogleloading;
 
-  set setLoading(bool val) {
-    _loading = val;
+  set setLoginLoading(bool val) {
+    _loginloading = val;
+    notifyListeners();
+  }
+
+  set setLoginWithGoogleLoading(bool val) {
+    _loginwithGoogleloading = val;
     notifyListeners();
   }
 
   void loginPressed() async {
-    setLoading = true;
+    setLoginLoading = true;
     Timer(Duration(seconds: 5), () {
-      setLoading = false;
+      setLoginLoading = false;
     });
   }
 
   void loginWithGooglePressed() async {
-    setLoading = true;
+    setLoginWithGoogleLoading = true;
     Timer(Duration(seconds: 5), () {
-      setLoading = false;
+      setLoginWithGoogleLoading = false;
     });
   }
 
