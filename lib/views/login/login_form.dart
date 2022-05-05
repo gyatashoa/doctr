@@ -13,7 +13,7 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
             children: const [
               Padding(
@@ -39,7 +39,7 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
             children: [
               const Padding(
@@ -82,7 +82,8 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
               padding: EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
                 'Forgot Password?',
-                style: TextStyle(color: Color(0xFF2D00CE)),
+                style: TextStyle(
+                    fontWeight: FontWeight.w600, color: Color(0xFF2D00CE)),
               ),
             )),
         Container(
@@ -105,7 +106,10 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
                       )
                     : const Text(
                         'Login',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18,
+                            color: Colors.white),
                       ))),
         Row(
           children: const [
@@ -147,7 +151,10 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
                     )
                   : const Text(
                       'Login with Google',
-                      style: TextStyle(fontSize: 16, color: Color(0xff374164)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                          color: Color(0xff374164)),
                     )),
         ),
       ],

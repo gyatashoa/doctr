@@ -45,7 +45,7 @@ class LoginView extends ViewModelBuilderWidget<LoginViewModel> {
                       Text(
                         'Login',
                         style: TextStyle(
-                            fontSize: devSize.height * .04,
+                            fontSize: devSize.height * .06,
                             fontWeight: FontWeight.bold,
                             color: const Color(0xff131945)),
                       ),
@@ -60,7 +60,9 @@ class LoginView extends ViewModelBuilderWidget<LoginViewModel> {
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1!
-                                      .copyWith(color: ashColor),
+                                      .copyWith(
+                                        color: ashColor,
+                                      ),
                                   text: 'New to $appName?\t',
                                   children: const [
                                     TextSpan(
