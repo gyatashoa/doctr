@@ -1,4 +1,5 @@
 import 'package:doctr/config/app_properties.dart';
+import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/login/login_form.dart';
 import 'package:doctr/views/login/login_view_model.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class LoginView extends ViewModelBuilderWidget<LoginViewModel> {
                           child: Lottie.asset('assets/animations/login_1.zip',
                               fit: BoxFit.fill,
                               width: double.infinity,
-                              height: devSize.height * .40),
+                              height: devSize.height * .35),
                         ),
                       ),
                       Text(
@@ -46,21 +47,22 @@ class LoginView extends ViewModelBuilderWidget<LoginViewModel> {
                         style: TextStyle(
                             fontSize: devSize.height * .04,
                             fontWeight: FontWeight.bold,
-                            color: const Color(0xff1E2944)),
+                            color: const Color(0xff131945)),
                       ),
                       const LoginForm(),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(5.0),
                         child: Center(
                           child: InkWell(
                             onTap: () {},
                             child: RichText(
                               text: const TextSpan(
-                                  style: TextStyle(color: Colors.black),
+                                  style: TextStyle(color: ashColor),
                                   text: 'New to $appName?\t',
                                   children: [
                                     TextSpan(
-                                        style: TextStyle(color: Colors.blue),
+                                        style:
+                                            TextStyle(color: Color(0xFF2D00CE)),
                                         text: 'Register')
                                   ]),
                             ),

@@ -1,5 +1,8 @@
+import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/login/login_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:stacked/stacked.dart';
 
 class LoginForm extends ViewModelWidget<LoginViewModel> {
@@ -9,58 +12,77 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
   Widget build(BuildContext context, LoginViewModel viewModel) {
     return Column(
       children: [
-        Row(
-          children: const [
-            Padding(
-              padding: EdgeInsets.only(top: 8.0, right: 15),
-              child: Icon(
-                Icons.email,
-                color: Color(0xffACB1C1),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            children: const [
+              Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: Icon(
+                  Ionicons.at,
+                  size: 24,
+                  color: ashColor,
+                ),
               ),
-            ),
-            Expanded(
-              child: TextField(
-                decoration: InputDecoration(
-                    hintText: 'Email', contentPadding: EdgeInsets.zero),
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.symmetric(vertical: 10),
+                    prefixIconConstraints:
+                        BoxConstraints(minWidth: 24, maxHeight: 24),
+                    hintText: 'Email',
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-        Row(
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 8.0, right: 15),
-              child: Icon(
-                Icons.lock_clock_rounded,
-                color: Color(0xffACB1C1),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            children: [
+              const Padding(
+                padding: EdgeInsets.only(right: 8.0),
+                child: Icon(
+                  Ionicons.lock_closed_outline,
+                  size: 24,
+                  color: ashColor,
+                ),
               ),
-            ),
-            Expanded(
-              child: TextField(
-                obscureText: viewModel.viewPassword,
-                decoration: InputDecoration(
-                    hintText: 'Password',
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        viewModel.viewPassword
-                            ? Icons.remove_red_eye_rounded
-                            : Icons.panorama_fish_eye,
-                        color: const Color(0xffACB1C1),
-                      ),
-                      onPressed: () =>
-                          viewModel.viewPassword = !viewModel.viewPassword,
-                    )),
+              Expanded(
+                child: TextField(
+                  obscureText: viewModel.viewPassword,
+                  decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                      prefixIconConstraints:
+                          const BoxConstraints(minWidth: 24, maxHeight: 24),
+                      suffixIconConstraints:
+                          const BoxConstraints(minWidth: 24, maxHeight: 24),
+                      hintText: 'Password',
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          viewModel.viewPassword
+                              ? Ionicons.eye_outline
+                              : Ionicons.eye_off_outline,
+                          color: const Color(0xffACB1C1),
+                        ),
+                        onPressed: () =>
+                            viewModel.viewPassword = !viewModel.viewPassword,
+                      )),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         const Align(
             alignment: Alignment.centerRight,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.0),
+              padding: EdgeInsets.symmetric(vertical: 10.0),
               child: Text(
                 'Forgot Password?',
-                style: TextStyle(color: Color(0xFF1F54D3)),
+                style: TextStyle(color: Color(0xFF2D00CE)),
               ),
             )),
         Container(
@@ -70,7 +92,7 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
                 style: TextButton.styleFrom(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
-                    backgroundColor: const Color(0xFF0124FB)),
+                    backgroundColor: const Color(0xFF3A00FF)),
                 onPressed: viewModel.isLoginLoading ||
                         viewModel.isLoginwithGoogleLoading
                     ? null
@@ -89,8 +111,8 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
           children: const [
             Expanded(
               child: Divider(
-                thickness: 1,
-                color: Color(0xffACB1C1),
+                thickness: .2,
+                color: ashColor,
               ),
             ),
             Padding(
@@ -99,8 +121,8 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
             ),
             Expanded(
                 child: Divider(
-              thickness: 1,
-              color: Color(0xffACB1C1),
+              thickness: .2,
+              color: ashColor,
             ))
           ],
         ),
@@ -109,14 +131,15 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
           width: double.infinity,
           child: TextButton.icon(
               style: TextButton.styleFrom(
-                  backgroundColor: const Color(0xffACB1C1)),
+                  backgroundColor: const Color(0xffF0F5F6)),
               onPressed:
                   viewModel.isLoginwithGoogleLoading || viewModel.isLoginLoading
                       ? null
                       : () => viewModel.loginWithGooglePressed(),
               icon: viewModel.isLoginwithGoogleLoading
                   ? const SizedBox()
-                  : const Icon(Icons.facebook),
+                  : SvgPicture.asset('assets/icons/google_icon.svg',
+                      height: 20, width: 20),
               label: viewModel.isLoginwithGoogleLoading
                   ? Transform.scale(
                       scale: .3,
@@ -124,7 +147,7 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
                     )
                   : const Text(
                       'Login with Google',
-                      style: TextStyle(fontSize: 16, color: Color(0xff1E2944)),
+                      style: TextStyle(fontSize: 16, color: Color(0xff374164)),
                     )),
         ),
       ],
