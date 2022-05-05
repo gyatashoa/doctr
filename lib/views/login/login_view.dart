@@ -56,10 +56,13 @@ class LoginView extends ViewModelBuilderWidget<LoginViewModel> {
                           child: InkWell(
                             onTap: () {},
                             child: RichText(
-                              text: const TextSpan(
-                                  style: TextStyle(color: ashColor),
+                              text: TextSpan(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1!
+                                      .copyWith(color: ashColor),
                                   text: 'New to $appName?\t',
-                                  children: [
+                                  children: const [
                                     TextSpan(
                                         style:
                                             TextStyle(color: Color(0xFF2D00CE)),
