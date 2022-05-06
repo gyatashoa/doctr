@@ -1,8 +1,16 @@
 import 'dart:async';
 
+import 'package:doctr/app/app.locator.dart';
+import 'package:doctr/app/app.router.dart';
+import 'package:doctr/services/auth_services.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class LoginViewModel extends FormViewModel {
+  final _authServices = locator<AuthServices>();
+  final _dialogServices = locator<DialogService>();
+  final _navigationServices = locator<NavigationService>();
+
   bool _viewPassword = false;
   bool _loginloading = false;
   bool _loginwithGoogleloading = false;
@@ -21,18 +29,30 @@ class LoginViewModel extends FormViewModel {
     notifyListeners();
   }
 
-  void loginPressed() async {
+  Future loginPressed({required String email, required String password}) async {
     setLoginLoading = true;
-    Timer(Duration(seconds: 5), () {
-      setLoginLoading = false;
-    });
+    var res = await _authServices.login(email: email, password: password);
+    setLoginLoading = false;
+    if (res is String) {
+      return _dialogServices.showDialog(title: 'Error', description: res);
+    }
+    return _navigationServices.pushNamedAndRemoveUntil(Routes.homeView,
+        predicate: ((route) => true));
   }
 
-  void loginWithGooglePressed() async {
+  Future loginWithGooglePressed() async {
     setLoginWithGoogleLoading = true;
-    Timer(Duration(seconds: 5), () {
-      setLoginWithGoogleLoading = false;
-    });
+    var res;
+    try {
+      res = await _authServices.loginWithGoogle();
+    } catch (e) {}
+    setLoginWithGoogleLoading = false;
+    if (res == null) return;
+    if (res is String) {
+      return _dialogServices.showDialog(title: 'Error', description: res);
+    }
+    return _navigationServices.pushNamedAndRemoveUntil(Routes.homeView,
+        predicate: ((route) => true));
   }
 
   set viewPassword(bool view) {

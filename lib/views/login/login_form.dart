@@ -1,22 +1,25 @@
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/login/login_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ionicons/ionicons.dart';
-import 'package:stacked/stacked.dart';
+import 'package:stacked_hooks/stacked_hooks.dart';
 
-class LoginForm extends ViewModelWidget<LoginViewModel> {
+class LoginForm extends HookViewModelWidget<LoginViewModel> {
   const LoginForm({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, LoginViewModel viewModel) {
+  Widget buildViewModelWidget(BuildContext context, LoginViewModel viewModel) {
+    var emailController = useTextEditingController(text: '');
+    var passwordController = useTextEditingController(text: '');
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
-            children: const [
-              Padding(
+            children: [
+              const Padding(
                 padding: EdgeInsets.only(right: 8.0),
                 child: Icon(
                   Ionicons.at,
@@ -26,7 +29,8 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
               ),
               Expanded(
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: emailController,
+                  decoration: const InputDecoration(
                     isDense: true,
                     contentPadding: EdgeInsets.symmetric(vertical: 10),
                     prefixIconConstraints:
@@ -52,6 +56,7 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
               ),
               Expanded(
                 child: TextField(
+                  controller: passwordController,
                   obscureText: viewModel.viewPassword,
                   decoration: InputDecoration(
                       isDense: true,
@@ -97,7 +102,9 @@ class LoginForm extends ViewModelWidget<LoginViewModel> {
                 onPressed: viewModel.isLoginLoading ||
                         viewModel.isLoginwithGoogleLoading
                     ? null
-                    : () => viewModel.loginPressed(),
+                    : () => viewModel.loginPressed(
+                        email: emailController.text,
+                        password: passwordController.text),
                 child: viewModel.isLoginLoading
                     ? Transform.scale(
                         scale: .3,
