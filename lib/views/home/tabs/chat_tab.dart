@@ -7,6 +7,10 @@ class ChatTab extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel model) {
-    return Container();
+    return Container(
+      child: Center(
+        child: Text('chat'),
+      ),
+    );
   }
 }

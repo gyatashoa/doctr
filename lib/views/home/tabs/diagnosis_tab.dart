@@ -7,6 +7,10 @@ class DiagnosisTab extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel model) {
-    return Container();
+    return Container(
+      child: Center(
+        child: Text('diagnosis'),
+      ),
+    );
   }
 }

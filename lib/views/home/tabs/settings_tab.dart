@@ -7,6 +7,11 @@ class SettingsTab extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel model) {
-    return Container();
+    print('object');
+    return Container(
+      child: Center(
+        child: Text('Settings'),
+      ),
+    );
   }
 }
