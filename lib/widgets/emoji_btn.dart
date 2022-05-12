@@ -10,11 +10,11 @@ class EmojiButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Container(
+    return Column(
+      children: [
+        InkWell(
+          onTap: onTap,
+          child: Container(
             height: 60,
             width: 60,
             child: Padding(
@@ -26,18 +26,18 @@ class EmojiButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            text,
-            style: Theme.of(context)
-                .textTheme
-                .bodySmall!
-                .copyWith(color: Colors.white),
-          )
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          text,
+          style: Theme.of(context)
+              .textTheme
+              .bodySmall!
+              .copyWith(color: Colors.white),
+        )
+      ],
     );
   }
 }

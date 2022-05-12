@@ -1,7 +1,9 @@
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
 import 'package:doctr/views/home/tabs/tabs.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
@@ -31,9 +33,9 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
               onTap: (value) => viewModel.index = value,
               items: const [
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: ''),
-                BottomNavigationBarItem(icon: Icon(Icons.chat), label: ''),
                 BottomNavigationBarItem(
-                    icon: Icon(Icons.medication), label: ''),
+                    icon: Icon(Ionicons.chatbubbles_sharp), label: ''),
+                BottomNavigationBarItem(icon: Icon(Ionicons.medkit), label: ''),
                 BottomNavigationBarItem(icon: Icon(Icons.settings), label: ''),
               ]),
         ),
