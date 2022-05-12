@@ -10,31 +10,34 @@ class EmojiButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 60,
-          width: 60,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset('assets/icons/img.png'),
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        children: [
+          Container(
+            height: 60,
+            width: 60,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Image.asset('assets/icons/img.png'),
+            ),
+            decoration: BoxDecoration(
+              color: const Color(0xff2D84C8),
+              borderRadius: BorderRadius.circular(20),
+            ),
           ),
-          decoration: BoxDecoration(
-            color: const Color(0xff2D84C8),
-            borderRadius: BorderRadius.circular(20),
+          const SizedBox(
+            height: 10,
           ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          'Happy',
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall!
-              .copyWith(color: Colors.white),
-        )
-      ],
+          Text(
+            text,
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall!
+                .copyWith(color: Colors.white),
+          )
+        ],
+      ),
     );
   }
 }

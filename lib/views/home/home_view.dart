@@ -19,7 +19,10 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
     return Padding(
       padding: EdgeInsets.only(top: statusViewHeight),
       child: Scaffold(
-        body: IndexedStack(index: viewModel.index, children: tabView),
+        body: SizedBox(
+            height: devSize.height,
+            width: devSize.width,
+            child: IndexedStack(index: viewModel.index, children: tabView)),
         backgroundColor: primaryColor,
         bottomNavigationBar: ClipRRect(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
