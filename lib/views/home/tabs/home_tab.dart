@@ -1,8 +1,10 @@
 import 'package:doctr/models/news_model.dart';
+import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
 import 'package:doctr/widgets/emoji_btn.dart';
 import 'package:doctr/widgets/new_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeTab extends ViewModelWidget<HomeViewModel> {
@@ -23,103 +25,158 @@ class HomeTab extends ViewModelWidget<HomeViewModel> {
           imageUrl: 'assets/images/health_compressed.jpg')
     ];
     final devSize = MediaQuery.of(context).size;
-    return GestureDetector(
-      onTap: FocusScope.of(context).unfocus,
+    return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Container(
+          //     decoration: BoxDecoration(color: primaryColor, boxShadow: [
+          //       BoxShadow(
+          //           offset: const Offset(0, 4),
+          //           blurRadius: 4,
+          //           spreadRadius: 0,
+          //           color: Colors.black.withOpacity(.25))
+          //     ]),
+          //     width: double.infinity,
+          //     height: 56,
+          //     child: const Center(
+          //         child: Text(
+          //       'HOME',
+          //       style: TextStyle(color: Colors.white, fontSize: 20),
+          //     ))),
+          const SizedBox(
+            height: 35,
+          ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: devSize.width * .1),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: devSize.height * .05),
-                child: Text(
-                  'Hi Felix',
-                  style: Theme.of(context).textTheme.displayMedium!.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w400,
-                      fontSize: devSize.height * .04),
-                ),
-              ),
-              Container(
-                  decoration: BoxDecoration(
-                      color: const Color(0xff2D84C8),
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: TextField(
-                        cursorColor: Colors.white,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displaySmall!
-                            .copyWith(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white.withOpacity(.8)),
-                        decoration: InputDecoration.collapsed(
-                            hintStyle: Theme.of(context)
-                                .textTheme
-                                .displaySmall!
-                                .copyWith(
-                                    fontSize: 15,
-                                    color: Colors.white.withOpacity(.4)),
-                            hintText: 'Disease name...')),
-                  )),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: devSize.height * .04),
-                child: Text(
-                  'How are you feeling today?',
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall!
-                      .copyWith(color: Colors.white, fontSize: 15),
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  EmojiButton(
-                      emoji: 'assets/icons/sick.svg',
-                      text: 'Sick',
-                      onTap: () {}),
-                  EmojiButton(
-                      emoji: 'assets/icons/neutral.svg',
-                      text: 'Neutral',
-                      onTap: () {}),
-                  EmojiButton(
-                      emoji: 'assets/icons/smiling.svg',
-                      text: 'Happy',
-                      onTap: () {}),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: devSize.height * .035),
-                child: Text(
-                  'News for you',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium!
-                      .copyWith(fontSize: 18, color: Colors.white),
-                ),
-              ),
-            ]),
+            child: const Text(
+              'Hi Felix',
+              style: TextStyle(color: Colors.white, fontSize: 25),
+            ),
           ),
-          Flexible(
-            // height: devSize.height * .3,
-            // width: double.infinity,
-            child: ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                scrollDirection: Axis.horizontal,
-                itemCount: _news.length,
-                itemBuilder: (_, i) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: NewsTile(
-                        news: _news[i],
-                      ),
-                    )),
-          )
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: devSize.width * .1),
+            child: _DiseaseTextField(),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: devSize.width * .1),
+            child: _HowAreYouFeelingSection(),
+          ),
+          const SizedBox(
+            height: 35,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: devSize.width * .1),
+            child: const Text(
+              'News for you',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          _NewsSection(news: _news)
         ],
       ),
+    );
+  }
+}
+
+class _HowAreYouFeelingSection extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'How are you feeling today?',
+          style: TextStyle(color: Colors.white, fontSize: 15),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            EmojiButton(
+                onTap: () {}, text: 'Sick', emoji: 'assets/icons/sick.png'),
+            EmojiButton(
+                onTap: () {},
+                text: 'Neutral',
+                emoji: 'assets/icons/neutral.png'),
+            EmojiButton(
+                onTap: () {}, text: 'Happy', emoji: 'assets/icons/happy.png'),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class _DiseaseTextField extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final devSize = MediaQuery.of(context).size;
+    return Container(
+      width: devSize.width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18), color: Color(0xff2D84C8)),
+      child: Padding(
+        padding: const EdgeInsets.all(18.0),
+        child: Row(
+          children: const [
+            Expanded(
+              child: TextField(
+                cursorColor: Colors.white,
+                style: TextStyle(color: Colors.white, fontSize: 16),
+                decoration: InputDecoration.collapsed(
+                    hintStyle: TextStyle(color: Colors.white38),
+                    hintText: 'Disease name ...'),
+              ),
+            ),
+            InkWell(
+              child: Icon(
+                Ionicons.search,
+                size: 18,
+                color: Colors.white38,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _NewsSection extends StatelessWidget {
+  const _NewsSection({Key? key, required this.news}) : super(key: key);
+  final List<NewsModel> news;
+
+  @override
+  Widget build(BuildContext context) {
+    final devSize = MediaQuery.of(context).size;
+    // print(devSize.height * .3);
+    return SizedBox(
+      height: devSize.height * .3,
+      width: double.infinity,
+      child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          itemCount: news.length,
+          itemBuilder: (_, i) => Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 2, horizontal: 8.0),
+                child: NewsTile(
+                  news: news[i],
+                ),
+              )),
     );
   }
 }

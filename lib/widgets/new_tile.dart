@@ -9,23 +9,28 @@ class NewsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final devSize = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
               color: Colors.black.withOpacity(.25),
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
               blurRadius: 8,
               spreadRadius: 2)
         ]),
-        // height: devSize.height * .009,
-        width: devSize.width * .45,
+        constraints: BoxConstraints.expand(
+          height: devSize.height * .3,
+          width: devSize.width * .45,
+        ),
         child: Stack(children: [
           Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                    image: AssetImage(news.imageUrl), fit: BoxFit.cover)),
+                    image: AssetImage(
+                      news.imageUrl,
+                    ),
+                    fit: BoxFit.cover)),
           ),
           Positioned(
             bottom: 0,

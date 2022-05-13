@@ -12,7 +12,12 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
   @override
   bool get reactive => true;
 
-  static const tabView = [HomeTab(), ChatTab(), DiagnosisTab(), SettingsTab()];
+  static const tabView = [
+    Positioned.fill(child: HomeTab()),
+    Positioned.fill(child: ChatTab()),
+    Positioned.fill(child: DiagnosisTab()),
+    Positioned.fill(child: SettingsTab())
+  ];
 
   @override
   Widget builder(BuildContext context, viewModel, Widget? child) {
@@ -21,10 +26,19 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
     return Padding(
       padding: EdgeInsets.only(top: statusViewHeight),
       child: Scaffold(
-        body: SizedBox(
-            height: devSize.height,
-            width: devSize.width,
-            child: IndexedStack(index: viewModel.index, children: tabView)),
+        body: GestureDetector(
+          onTap: () {
+            print('object');
+            FocusScope.of(context).unfocus();
+          },
+          child: SizedBox(
+              height: devSize.height,
+              width: devSize.width,
+              child: IndexedStack(
+                  sizing: StackFit.expand,
+                  index: viewModel.index,
+                  children: tabView)),
+        ),
         backgroundColor: primaryColor,
         bottomNavigationBar: ClipRRect(
           borderRadius: const BorderRadius.vertical(top: Radius.circular(25)),
