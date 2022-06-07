@@ -5,7 +5,7 @@ import 'dart:convert';
 
 class ApiServices {
   late final Dio _dio;
-  final String baseUrl = 'https:///api/v1/predictions';
+  final String baseUrl = 'https://prediction-disease-test.herokuapp.com/api/v1/predictions';
 
   ApiServices() {
     _dio = Dio();
