@@ -1,5 +1,6 @@
 import 'package:doctr/services/api_services.dart';
 import 'package:doctr/services/auth_services.dart';
+import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/views/home/home_view.dart';
 import 'package:doctr/views/login/login_view.dart';
 import 'package:doctr/views/make_a_diagnosis/make_a_diagnosis_view.dart';
@@ -17,6 +18,7 @@ import 'package:stacked_services/stacked_services.dart';
   LazySingleton(classType: AuthServices),
   LazySingleton(classType: DialogService),
   LazySingleton(classType: SnackbarService),
-  LazySingleton(classType: ApiServices)
+  LazySingleton(classType: ApiServices),
+  Singleton(classType: CacheServices),
 ])
 class AppSetup {}

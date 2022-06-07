@@ -12,6 +12,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../services/api_services.dart';
 import '../services/auth_services.dart';
+import '../services/cache_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -26,4 +27,5 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => ApiServices());
+  locator.registerSingleton(CacheServices());
 }

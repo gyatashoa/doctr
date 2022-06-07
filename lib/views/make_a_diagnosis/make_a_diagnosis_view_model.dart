@@ -1,4 +1,5 @@
 import 'package:doctr/app/app.locator.dart';
+import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/utils/formatter.dart';
 import 'package:doctr/utils/snackbar_config.dart';
 import 'package:stacked/stacked.dart';
@@ -11,8 +12,10 @@ class MakeADiagnosisViewModel extends FormViewModel {
   String? _symp_3;
   String? _symp_4;
   String? _symp_5;
+  List<String>? symps;
   final _snackbarService = locator<SnackbarService>();
   final _apiService = locator<ApiServices>();
+  final _cacheService = locator<CacheServices>();
 
   String? get symp_1 => _symp_1;
   String? get symp_2 => _symp_2;
@@ -21,14 +24,25 @@ class MakeADiagnosisViewModel extends FormViewModel {
   String? get symp_5 => _symp_5;
 
   Future getSymptoms() async {
+    var loaded = _cacheService.loadSymptoms();
+
+    if (loaded != null) {
+      symps = loaded;
+      notifyListeners();
+      return;
+    }
     //show loading state to user
     //get symptoms from api
     var res = await _apiService.getSymptoms();
     //hide loading state to user
     if (res.data != null) {
+      var data = formatSymptomsToList(res.data);
       //add symptoms to state store
       //populate symptoms to ui
+      symps = data;
+      notifyListeners();
       //cache symptoms to local storage
+      _cacheService.saveSymtoms(data);
       return;
     }
 
@@ -61,12 +75,7 @@ class MakeADiagnosisViewModel extends FormViewModel {
   }
 
   List<String> get symptoms {
-    List<String> menuItems = const [
-      "Fever",
-      "Headache",
-      "Vomiting",
-      "Cold",
-    ];
+    List<String> menuItems = [...symps ?? []];
     return menuItems;
   }
 
