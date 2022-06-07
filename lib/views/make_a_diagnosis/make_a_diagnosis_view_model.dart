@@ -13,8 +13,10 @@ class MakeADiagnosisViewModel extends FormViewModel {
   String? _symp_4;
   String? _symp_5;
   List<String>? symps;
+  bool loading = false;
   final _snackbarService = locator<SnackbarService>();
   final _apiService = locator<ApiServices>();
+  final _dialogService = locator<DialogService>();
   final _cacheService = locator<CacheServices>();
 
   String? get symp_1 => _symp_1;
@@ -85,7 +87,17 @@ class MakeADiagnosisViewModel extends FormViewModel {
           variant: SnackbarVariant.error,
           message: 'Please select at least one symptom');
     }
-    print(formatSymptoms);
+    loading = true;
+    notifyListeners();
+    var res = await _apiService.makePrediction(formatSymptoms);
+    loading = false;
+    notifyListeners();
+    if (res.data == null) {
+      return _snackbarService.showCustomSnackBar(
+          variant: SnackbarVariant.error, message: 'Something went wrong');
+    }
+    _dialogService.showDialog(
+        title: 'Diagnosis Report', description: res.data['disease']);
   }
 
   List<String> get formatSymptoms =>
