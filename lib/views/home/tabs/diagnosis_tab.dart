@@ -1,7 +1,10 @@
+import 'package:doctr/app/app.locator.dart';
+import 'package:doctr/app/app.router.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class DiagnosisTab extends ViewModelWidget<HomeViewModel> {
   const DiagnosisTab({Key? key}) : super(key: key, reactive: false);
@@ -60,9 +63,10 @@ extension on DiagnosisTiles {
   String repr() => this.toString().split('.').last.replaceAll(RegExp('_'), ' ');
 
   void onTap() {
+    var navigationService = locator<NavigationService>();
     switch (this) {
       case DiagnosisTiles.MAKE_A_DIAGNOSIS:
-        // TODO: Handle this case.
+        navigationService.navigateTo(Routes.makeADiagnosisView);
         break;
       case DiagnosisTiles.CHECK_DIAGNOSIS_HISTORY:
         // TODO: Handle this case.

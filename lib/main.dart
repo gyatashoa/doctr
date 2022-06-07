@@ -3,6 +3,7 @@ import 'package:doctr/app/app.router.dart';
 import 'package:doctr/config/app_properties.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/theme/app_theme.dart';
+import 'package:doctr/utils/snackbar_config.dart';
 import 'package:doctr/views/home/home_view.dart';
 import 'package:doctr/views/login/login_view.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -13,6 +14,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   setupLocator();
+  loadSnackbarConfig();
   final authServices = locator<AuthServices>();
   runApp(MyApp(
     authServices: authServices,
