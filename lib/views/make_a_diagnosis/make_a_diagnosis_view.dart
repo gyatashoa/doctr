@@ -9,7 +9,13 @@ class MakeADiagnosisView
   const MakeADiagnosisView({Key? key}) : super(key: key);
 
   @override
-  bool get reactive => false;
+  bool get reactive => true;
+
+  @override
+  void onViewModelReady(MakeADiagnosisViewModel viewModel) {
+    print('object');
+    viewModel.getSymptoms();
+  }
 
   @override
   Widget builder(
