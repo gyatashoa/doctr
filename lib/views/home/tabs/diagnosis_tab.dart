@@ -69,7 +69,7 @@ extension on DiagnosisTiles {
         navigationService.navigateTo(Routes.makeADiagnosisView);
         break;
       case DiagnosisTiles.CHECK_DIAGNOSIS_HISTORY:
-        // TODO: Handle this case.
+        navigationService.navigateTo(Routes.checkDiagnosisHistoryView);
         break;
       case DiagnosisTiles.REPORT_A_PROBLEM:
         // TODO: Handle this case.

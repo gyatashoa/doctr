@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +14,8 @@ class SettingsTab extends ViewModelWidget<HomeViewModel> {
       SettingsTiles.CHECK_USER_PROFILE,
       SettingsTiles.ABOUT_THIS_APP,
       SettingsTiles.TERMS_AND_CONDITIONS,
-      SettingsTiles.NOTIFICATIONS,
       SettingsTiles.LOGOUT,
     ];
-    final devSize = MediaQuery.of(context).size;
     return Column(
       children: [
         Container(
@@ -37,7 +37,7 @@ class SettingsTab extends ViewModelWidget<HomeViewModel> {
             child: ListView.separated(
           itemCount: tiles.length,
           itemBuilder: (_, i) => ListTile(
-            onTap: tiles[i].navigate,
+            onTap: () => tiles[i].navigate(model, context),
             title: Text(
               tiles[i].repr(),
               style: const TextStyle(color: Colors.white, fontSize: 16),
@@ -57,29 +57,25 @@ enum SettingsTiles {
   CHECK_USER_PROFILE,
   ABOUT_THIS_APP,
   TERMS_AND_CONDITIONS,
-  NOTIFICATIONS,
   LOGOUT
 }
 
 extension on SettingsTiles {
   String repr() => this.toString().split('.').last.replaceAll(RegExp('_'), ' ');
 
-  void navigate() {
+  void navigate(HomeViewModel viewModel, BuildContext context) {
     switch (this) {
       case SettingsTiles.CHECK_USER_PROFILE:
-        // TODO: Handle this case.
+        viewModel.checkUserProfile();
         break;
       case SettingsTiles.ABOUT_THIS_APP:
-        // TODO: Handle this case.
+        viewModel.aboutThisApp(context);
         break;
       case SettingsTiles.TERMS_AND_CONDITIONS:
-        // TODO: Handle this case.
-        break;
-      case SettingsTiles.NOTIFICATIONS:
-        // TODO: Handle this case.
+        viewModel.termsAndCondition();
         break;
       case SettingsTiles.LOGOUT:
-        // TODO: Handle this case.
+        viewModel.logout();
         break;
     }
   }
