@@ -53,7 +53,7 @@ class ApiServices {
     } on Exception catch (e) {
       return ApiResponse.error(
           exception: ApiException(
-              'Error while fectching ', 'Error while fetching data!!'));
+              'Error while fetching data', 'Error while fetching data!!'));
     }
   }
 }

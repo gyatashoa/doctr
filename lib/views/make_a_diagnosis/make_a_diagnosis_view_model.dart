@@ -94,7 +94,8 @@ class MakeADiagnosisViewModel extends FormViewModel {
     notifyListeners();
     if (res.data == null) {
       return _snackbarService.showCustomSnackBar(
-          variant: SnackbarVariant.error, message: 'Something went wrong');
+          variant: SnackbarVariant.error,
+          message: res.exception?.message ?? 'Error while making diagnosis');
     }
     _dialogService.showDialog(
         title: 'Diagnosis Report', description: res.data['disease']);
