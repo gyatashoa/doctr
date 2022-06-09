@@ -15,6 +15,7 @@ import '../services/auth_services.dart';
 import '../services/cache_service.dart';
 import '../services/cloud_firestore_services.dart';
 import '../services/diagnosis_response_state_service.dart';
+import '../services/symtoms_state_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -35,4 +36,5 @@ Future setupLocator(
 
   locator.registerLazySingleton(() => CloudFirestoreServices());
   locator.registerLazySingleton(() => DiagnosisResponseStateService());
+  locator.registerLazySingleton(() => SymptomsStateService());
 }

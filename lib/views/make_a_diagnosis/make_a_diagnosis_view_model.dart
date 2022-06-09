@@ -1,13 +1,11 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/models/diagnosis_response_model.dart';
-import 'package:doctr/providers/symptoms_provider.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/cloud_firestore_services.dart';
 import 'package:doctr/services/diagnosis_response_state_service.dart';
+import 'package:doctr/services/symtoms_state_service.dart';
 import 'package:doctr/utils/formatter.dart';
 import 'package:doctr/utils/snackbar_config.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:doctr/services/api_services.dart';
@@ -27,19 +25,18 @@ class MakeADiagnosisViewModel extends FormViewModel {
   final _cloudFirestoreServices = locator<CloudFirestoreServices>();
   final _diagnosisResponseStateService =
       locator<DiagnosisResponseStateService>();
+  final _symptomsStateService = locator<SymptomsStateService>();
 
   String? get symp_1 => _symp_1;
   String? get symp_2 => _symp_2;
   String? get symp_3 => _symp_3;
   String? get symp_4 => _symp_4;
   String? get symp_5 => _symp_5;
-  Future onload(BuildContext context) async {
-    var provider = Provider.of<SymptomsProvider>(context, listen: false);
-
-    if (provider.getSymptoms.isEmpty) {
+  Future onload() async {
+    if (_symptomsStateService.data.isEmpty) {
       var loaded = _cacheService.loadSymptoms();
       if (loaded != null) {
-        provider.setSymptoms = loaded;
+        _symptomsStateService.setData = loaded;
         return;
       }
       //show loading state to user
@@ -50,7 +47,7 @@ class MakeADiagnosisViewModel extends FormViewModel {
         var data = formatSymptomsToList(res.data);
         //add symptoms to state store
         //populate symptoms to ui
-        provider.setSymptoms = data;
+        _symptomsStateService.setData = data;
         //cache symptoms to local storage
         _cacheService.saveSymtoms(data);
         return;
@@ -85,10 +82,7 @@ class MakeADiagnosisViewModel extends FormViewModel {
     notifyListeners();
   }
 
-  List<String> get symptoms {
-    List<String> menuItems = [...symps ?? []];
-    return menuItems;
-  }
+  List<String> get symptoms => _symptomsStateService.data;
 
   Future onStartDiagnosis() async {
     if (formatSymptoms.isEmpty) {

@@ -3,6 +3,7 @@ import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/cloud_firestore_services.dart';
 import 'package:doctr/services/diagnosis_response_state_service.dart';
+import 'package:doctr/services/symtoms_state_service.dart';
 import 'package:doctr/views/check_diagnosis_history/check_diagnosis_history_view.dart';
 import 'package:doctr/views/check_user_profile/check_user_profile_view.dart';
 import 'package:doctr/views/home/home_view.dart';
@@ -29,6 +30,7 @@ import 'package:stacked_services/stacked_services.dart';
   LazySingleton(classType: ApiServices),
   Presolve(classType: CacheServices, presolveUsing: CacheServices.presolve),
   LazySingleton(classType: CloudFirestoreServices),
-  LazySingleton(classType: DiagnosisResponseStateService)
+  LazySingleton(classType: DiagnosisResponseStateService),
+  LazySingleton(classType: SymptomsStateService)
 ])
 class AppSetup {}

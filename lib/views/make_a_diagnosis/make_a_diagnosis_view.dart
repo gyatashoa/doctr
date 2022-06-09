@@ -1,9 +1,7 @@
-import 'package:doctr/providers/symptoms_provider.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/make_a_diagnosis/make_a_diagnosis_view_model.dart';
 import 'package:doctr/widgets/drop_down_form.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class MakeADiagnosisView extends StatelessWidget {
@@ -14,7 +12,7 @@ class MakeADiagnosisView extends StatelessWidget {
     var statusViewHeight = MediaQuery.of(context).viewPadding.top;
     final devSize = MediaQuery.of(context).size;
     return ViewModelBuilder<MakeADiagnosisViewModel>.reactive(
-      onModelReady: (model) => model.onload(context),
+      onModelReady: (model) => model.onload(),
       builder: (BuildContext context, MakeADiagnosisViewModel viewModel,
           Widget? child) {
         return Padding(
@@ -38,45 +36,41 @@ class MakeADiagnosisView extends StatelessWidget {
                   ),
                   Expanded(
                     child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Consumer<SymptomsProvider>(
-                          builder: (context, provider, child) {
-                        return Column(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
                           children: [
                             CustomDropDownFormField(
-                              items: provider.getSymptoms,
+                              items: viewModel.symptoms,
                               selectedValue: viewModel.symp_1,
                               onChanged: (val) =>
                                   viewModel.setSelectedValue('symp_1', val),
                             ),
                             CustomDropDownFormField(
-                              items: provider.getSymptoms,
+                              items: viewModel.symptoms,
                               selectedValue: viewModel.symp_2,
                               onChanged: (val) =>
                                   viewModel.setSelectedValue('symp_2', val),
                             ),
                             CustomDropDownFormField(
-                              items: provider.getSymptoms,
+                              items: viewModel.symptoms,
                               selectedValue: viewModel.symp_3,
                               onChanged: (val) =>
                                   viewModel.setSelectedValue('symp_3', val),
                             ),
                             CustomDropDownFormField(
-                              items: provider.getSymptoms,
+                              items: viewModel.symptoms,
                               selectedValue: viewModel.symp_4,
                               onChanged: (val) =>
                                   viewModel.setSelectedValue('symp_4', val),
                             ),
                             CustomDropDownFormField(
-                              items: provider.getSymptoms,
+                              items: viewModel.symptoms,
                               selectedValue: viewModel.symp_5,
                               onChanged: (val) =>
                                   viewModel.setSelectedValue('symp_5', val),
                             )
                           ],
-                        );
-                      }),
-                    ),
+                        )),
                   ),
                   Align(
                     alignment: Alignment.bottomCenter,
