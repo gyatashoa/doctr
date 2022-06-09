@@ -1,5 +1,7 @@
 import 'package:doctr/app/app.locator.dart';
+import 'package:doctr/models/diagnosis_response_model.dart';
 import 'package:doctr/services/cache_service.dart';
+import 'package:doctr/services/cloud_firestore_services.dart';
 import 'package:doctr/utils/formatter.dart';
 import 'package:doctr/utils/snackbar_config.dart';
 import 'package:stacked/stacked.dart';
@@ -18,6 +20,7 @@ class MakeADiagnosisViewModel extends FormViewModel {
   final _apiService = locator<ApiServices>();
   final _dialogService = locator<DialogService>();
   final _cacheService = locator<CacheServices>();
+  final _cloudFirestoreServices = locator<CloudFirestoreServices>();
 
   String? get symp_1 => _symp_1;
   String? get symp_2 => _symp_2;
@@ -90,13 +93,21 @@ class MakeADiagnosisViewModel extends FormViewModel {
     loading = true;
     notifyListeners();
     var res = await _apiService.makePrediction(formatSymptoms);
-    loading = false;
-    notifyListeners();
+
     if (res.data == null) {
+      loading = false;
+      notifyListeners();
       return _snackbarService.showCustomSnackBar(
           variant: SnackbarVariant.error,
           message: res.exception?.message ?? 'Error while making diagnosis');
     }
+    var response = await _cloudFirestoreServices.saveDataToCloudDb(
+        DiagnosisResponseModel(
+            diseaseName: res.data['disease'],
+            createdAt: DateTime.now(),
+            symptoms: formatSymptoms));
+    loading = false;
+    notifyListeners();
     _dialogService.showDialog(
         title: 'Diagnosis Report', description: res.data['disease']);
   }

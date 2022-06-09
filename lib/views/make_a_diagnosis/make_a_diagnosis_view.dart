@@ -87,7 +87,7 @@ class MakeADiagnosisView
                         style:
                             TextButton.styleFrom(backgroundColor: Colors.white),
                         onPressed: viewModel.onStartDiagnosis,
-                        child: viewModel.isBusy
+                        child: viewModel.loading
                             ? Transform.scale(
                                 scale: .3,
                                 child: const CircularProgressIndicator(

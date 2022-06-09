@@ -13,6 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../services/api_services.dart';
 import '../services/auth_services.dart';
 import '../services/cache_service.dart';
+import '../services/cloud_firestore_services.dart';
 
 final locator = StackedLocator.instance;
 
@@ -28,4 +29,5 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => SnackbarService());
   locator.registerLazySingleton(() => ApiServices());
   locator.registerSingleton(CacheServices());
+  locator.registerLazySingleton(() => CloudFirestoreServices());
 }
