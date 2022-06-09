@@ -1,9 +1,13 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/models/diagnosis_response_model.dart';
+import 'package:doctr/providers/symptoms_provider.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/cloud_firestore_services.dart';
+import 'package:doctr/services/diagnosis_response_state_service.dart';
 import 'package:doctr/utils/formatter.dart';
 import 'package:doctr/utils/snackbar_config.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:doctr/services/api_services.dart';
@@ -21,38 +25,40 @@ class MakeADiagnosisViewModel extends FormViewModel {
   final _dialogService = locator<DialogService>();
   final _cacheService = locator<CacheServices>();
   final _cloudFirestoreServices = locator<CloudFirestoreServices>();
+  final _diagnosisResponseStateService =
+      locator<DiagnosisResponseStateService>();
 
   String? get symp_1 => _symp_1;
   String? get symp_2 => _symp_2;
   String? get symp_3 => _symp_3;
   String? get symp_4 => _symp_4;
   String? get symp_5 => _symp_5;
+  Future onload(BuildContext context) async {
+    var provider = Provider.of<SymptomsProvider>(context, listen: false);
 
-  Future getSymptoms() async {
-    var loaded = _cacheService.loadSymptoms();
+    if (provider.getSymptoms.isEmpty) {
+      var loaded = _cacheService.loadSymptoms();
+      if (loaded != null) {
+        provider.setSymptoms = loaded;
+        return;
+      }
+      //show loading state to user
+      //get symptoms from api
+      var res = await _apiService.getSymptoms();
+      //hide loading state to user
+      if (res.data != null) {
+        var data = formatSymptomsToList(res.data);
+        //add symptoms to state store
+        //populate symptoms to ui
+        provider.setSymptoms = data;
+        //cache symptoms to local storage
+        _cacheService.saveSymtoms(data);
+        return;
+      }
 
-    if (loaded != null) {
-      symps = loaded;
-      notifyListeners();
-      return;
+      //if error show error dialog
+      print(res.exception!.message);
     }
-    //show loading state to user
-    //get symptoms from api
-    var res = await _apiService.getSymptoms();
-    //hide loading state to user
-    if (res.data != null) {
-      var data = formatSymptomsToList(res.data);
-      //add symptoms to state store
-      //populate symptoms to ui
-      symps = data;
-      notifyListeners();
-      //cache symptoms to local storage
-      _cacheService.saveSymtoms(data);
-      return;
-    }
-
-    //if error show error dialog
-    print(res.exception!.message);
   }
 
   void setSelectedValue(String key, String? value) {
@@ -101,12 +107,14 @@ class MakeADiagnosisViewModel extends FormViewModel {
           variant: SnackbarVariant.error,
           message: res.exception?.message ?? 'Error while making diagnosis');
     }
-    var response = await _cloudFirestoreServices.saveDataToCloudDb(
-        DiagnosisResponseModel(
-            diseaseName: res.data['disease'],
-            createdAt: DateTime.now(),
-            symptoms: formatSymptoms));
+    var model = DiagnosisResponseModel(
+        diseaseName: res.data['disease'],
+        createdAt: DateTime.now(),
+        symptoms: formatSymptoms);
+    var response = await _cloudFirestoreServices.saveDataToCloudDb(model);
+    _diagnosisResponseStateService.addToList = model;
     loading = false;
+
     notifyListeners();
     _dialogService.showDialog(
         title: 'Diagnosis Report', description: res.data['disease']);

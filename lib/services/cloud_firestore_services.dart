@@ -42,4 +42,29 @@ class CloudFirestoreServices {
       );
     }
   }
+
+  Future<ApiResponse<List<DiagnosisResponseModel>, CloudFirestoreException>>
+      loadDataToCloudDb() async {
+    var uid = _authService.currentUser?.uid;
+
+    var ref = _instance.collection(collectionName);
+    try {
+      var res = await ref
+          .doc(uid)
+          .collection('reports')
+          .withConverter<DiagnosisResponseModel>(
+              fromFirestore: (val, _) =>
+                  DiagnosisResponseModel.fromJson(val.data() ?? {}),
+              toFirestore: (m, _) => m.toJson())
+          .get();
+      return ApiResponse.data(data: res.docs.map((e) => e.data()).toList());
+    } on Exception catch (e) {
+      print(e);
+      return ApiResponse.error(
+        exception: CloudFirestoreException(
+            message: 'Error while uploading data to firebase',
+            details: 'Unable to upload data to firebase'),
+      );
+    }
+  }
 }

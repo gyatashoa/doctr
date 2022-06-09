@@ -1,8 +1,9 @@
-import 'package:doctr/models/diagnosis_response_model.dart';
 import 'package:doctr/theme/colors.dart';
+import 'package:doctr/views/check_diagnosis_history/body.dart';
 import 'package:doctr/views/check_diagnosis_history/check_diagnosis_history_view_model.dart';
 import 'package:doctr/widgets/diagnosis_expansion_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';
 
 class CheckDiagnosisHistoryView
@@ -10,7 +11,7 @@ class CheckDiagnosisHistoryView
   const CheckDiagnosisHistoryView({Key? key}) : super(key: key);
 
   @override
-  bool get reactive => false;
+  bool get reactive => true;
 
   @override
   Widget builder(BuildContext context, CheckDiagnosisHistoryViewModel viewModel,
@@ -28,12 +29,32 @@ class CheckDiagnosisHistoryView
           backgroundColor: primaryColor,
         ),
         // backgroundColor: primaryColor,
-        body: ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (_, i) =>
-                DiagnosisExpansionWidget(data: viewModel.response[i]),
-            separatorBuilder: (_, i) => const Divider(),
-            itemCount: viewModel.response.length),
+        body: Builder(builder: (context) {
+          if (viewModel.dataFromStateManager.isNotEmpty) {
+            return const HistoryBody();
+          }
+
+          if (viewModel.isBusy) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (viewModel.hasError) {
+            return const Center(child: Text('Error'));
+          }
+          if (viewModel.dataReady) {
+            if (viewModel.data!.isEmpty) {
+              return Column(
+                children: [
+                  Lottie.asset('assets/animations/empty_box.json'),
+                  const Text('You have no diagnosis history')
+                ],
+              );
+            }
+            return const HistoryBody();
+          }
+          return Container();
+        }),
       ),
     );
   }
