@@ -2,6 +2,7 @@ import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/make_a_diagnosis/make_a_diagnosis_view_model.dart';
 import 'package:doctr/widgets/drop_down_form.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
 
 class MakeADiagnosisView extends StatelessWidget {
@@ -12,7 +13,9 @@ class MakeADiagnosisView extends StatelessWidget {
     var statusViewHeight = MediaQuery.of(context).viewPadding.top;
     final devSize = MediaQuery.of(context).size;
     return ViewModelBuilder<MakeADiagnosisViewModel>.reactive(
-      onModelReady: (model) => model.onload(),
+      onModelReady: (model) => SchedulerBinding.instance!.addPostFrameCallback(
+        (_) => model.onload(),
+      ),
       builder: (BuildContext context, MakeADiagnosisViewModel viewModel,
           Widget? child) {
         return Padding(

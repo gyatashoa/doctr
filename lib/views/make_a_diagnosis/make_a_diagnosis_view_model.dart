@@ -108,7 +108,6 @@ class MakeADiagnosisViewModel extends FormViewModel {
     var response = await _cloudFirestoreServices.saveDataToCloudDb(model);
     _diagnosisResponseStateService.addToList = model;
     loading = false;
-
     notifyListeners();
     _dialogService.showDialog(
         title: 'Diagnosis Report', description: res.data['disease']);
