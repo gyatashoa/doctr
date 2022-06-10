@@ -15,6 +15,7 @@ import '../views/check_user_profile/check_user_profile_view.dart';
 import '../views/home/home_view.dart';
 import '../views/login/login_view.dart';
 import '../views/make_a_diagnosis/make_a_diagnosis_view.dart';
+import '../views/signup/complete_registration_view.dart';
 import '../views/signup/signup_view.dart';
 import '../views/terms_and_conditions/terms_and_conditions_view.dart';
 
@@ -27,6 +28,7 @@ class Routes {
   static const String termsAndConditions = '/terms-and-conditions';
   static const String checkDiagnosisHistoryView =
       '/check-diagnosis-history-view';
+  static const String completeRegistrationView = '/complete-registration-view';
   static const all = <String>{
     loginView,
     signUpView,
@@ -35,6 +37,7 @@ class Routes {
     checkUserProfileView,
     termsAndConditions,
     checkDiagnosisHistoryView,
+    completeRegistrationView,
   };
 }
 
@@ -49,6 +52,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.checkUserProfileView, page: CheckUserProfileView),
     RouteDef(Routes.termsAndConditions, page: TermsAndConditions),
     RouteDef(Routes.checkDiagnosisHistoryView, page: CheckDiagnosisHistoryView),
+    RouteDef(Routes.completeRegistrationView, page: CompleteRegistrationView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -92,6 +96,12 @@ class StackedRouter extends RouterBase {
     CheckDiagnosisHistoryView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const CheckDiagnosisHistoryView(),
+        settings: data,
+      );
+    },
+    CompleteRegistrationView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const CompleteRegistrationView(),
         settings: data,
       );
     },

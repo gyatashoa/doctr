@@ -10,6 +10,7 @@ class SignUpView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final statusBarHeight = MediaQuery.of(context).viewPadding.top;
+    var nameController = useTextEditingController(text: '');
     var emailController = useTextEditingController(text: '');
     var passwordController = useTextEditingController(text: '');
     var passwordController1 = useTextEditingController(text: '');
@@ -26,6 +27,11 @@ class SignUpView extends HookWidget {
                       EdgeInsets.symmetric(horizontal: devSize.width * .08),
                   child: Column(
                     children: [
+                      TextField(
+                        controller: nameController,
+                        decoration:
+                            const InputDecoration(hintText: 'full name'),
+                      ),
                       TextField(
                         controller: emailController,
                         decoration: const InputDecoration(hintText: 'email'),
@@ -49,6 +55,7 @@ class SignUpView extends HookWidget {
                               onPressed: viewModel.isBusy
                                   ? null
                                   : () => viewModel.signUp(
+                                      nameController.text,
                                       emailController.text,
                                       passwordController.text,
                                       passwordController1.text),
