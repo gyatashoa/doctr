@@ -20,8 +20,9 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> logout() async {
     await _authService.signOut();
+    //TODO: Will test it when i get an internet connection
     await _navigationService.pushNamedAndRemoveUntil(Routes.loginView,
-        predicate: (route) => true);
+        predicate: (route) => false);
   }
 
   Future<void> aboutThisApp(BuildContext context) async {

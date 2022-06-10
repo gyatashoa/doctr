@@ -62,4 +62,8 @@ class LoginViewModel extends FormViewModel {
 
   @override
   void setFormStatus() {}
+
+  void navigateToSignUp() {
+    _navigationServices.navigateTo(Routes.signUpView);
+  }
 }
