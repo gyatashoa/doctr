@@ -3,6 +3,7 @@ import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/exceptions/cloud_firestore_exception.dart';
 import 'package:doctr/models/api_response.dart';
 import 'package:doctr/models/diagnosis_response_model.dart';
+import 'package:doctr/models/user_additional_data_model.dart';
 import 'package:doctr/services/auth_services.dart';
 
 class CloudFirestoreServices {
@@ -10,6 +11,8 @@ class CloudFirestoreServices {
   late final AuthServices _authService;
 
   String get collectionName => 'DiagnosisReport';
+
+  String get userCollection => 'Users';
 
   CloudFirestoreServices() {
     _instance = FirebaseFirestore.instance;
@@ -35,6 +38,29 @@ class CloudFirestoreServices {
       return ApiResponse.data(data: data.data());
     } on Exception catch (e) {
       print(e);
+      return ApiResponse.error(
+        exception: CloudFirestoreException(
+            message: 'Error while uploading data to firebase',
+            details: 'Unable to upload data to firebase'),
+      );
+    }
+  }
+
+  Future<ApiResponse> uploadUserAdditionalData(
+      UserAdditionalDataModel data) async {
+    var uid = _authService.currentUser?.uid;
+
+    var ref = _instance.collection(userCollection);
+    try {
+      await ref.doc(uid).set(data.toJson);
+      //     .collection('reports')
+      //     .withConverter<DiagnosisResponseModel>(
+      //         fromFirestore: (val, _) =>
+      //             DiagnosisResponseModel.fromJson(val.data() ?? {}),
+      //         toFirestore: (m, _) => m.toJson())
+      //     .get();
+      return ApiResponse.data(data: data);
+    } on Exception {
       return ApiResponse.error(
         exception: CloudFirestoreException(
             message: 'Error while uploading data to firebase',

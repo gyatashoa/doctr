@@ -15,7 +15,7 @@ class SignUpView extends HookWidget {
     var passwordController = useTextEditingController(text: '');
     var passwordController1 = useTextEditingController(text: '');
     final devSize = MediaQuery.of(context).size;
-    return ViewModelBuilder<SignUpViewModel>.nonReactive(
+    return ViewModelBuilder<SignUpViewModel>.reactive(
         viewModelBuilder: () => SignUpViewModel(),
         builder: (_, viewModel, child) => Padding(
               padding: EdgeInsets.only(top: statusBarHeight),
