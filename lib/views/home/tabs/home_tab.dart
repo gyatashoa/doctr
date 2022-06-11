@@ -1,17 +1,26 @@
+import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/models/news_model.dart';
+import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
 import 'package:doctr/widgets/emoji_btn.dart';
 import 'package:doctr/widgets/new_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_hooks/stacked_hooks.dart';
 
-class HomeTab extends ViewModelWidget<HomeViewModel> {
+class HomeTab extends HookViewModelWidget<HomeViewModel> {
   const HomeTab({Key? key}) : super(key: key, reactive: false);
 
   @override
-  Widget build(BuildContext context, HomeViewModel model) {
+  Widget buildViewModelWidget(BuildContext context, HomeViewModel model) {
+    AuthServices? authService;
+
+    useEffect(() {
+      authService = locator<AuthServices>();
+    }, []);
     //TODO: Remove after api is implemented
     List<NewsModel> _news = [
       NewsModel(
@@ -50,9 +59,9 @@ class HomeTab extends ViewModelWidget<HomeViewModel> {
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: devSize.width * .1),
-            child: const Text(
-              'Hi Felix',
-              style: TextStyle(color: Colors.white, fontSize: 25),
+            child: Text(
+              'Hi ${authService?.currentUser?.displayName ?? ''}',
+              style: const TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),
           const SizedBox(

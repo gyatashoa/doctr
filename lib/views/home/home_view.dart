@@ -28,7 +28,6 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
       child: Scaffold(
         body: GestureDetector(
           onTap: () {
-            print('object');
             FocusScope.of(context).unfocus();
           },
           child: SizedBox(
