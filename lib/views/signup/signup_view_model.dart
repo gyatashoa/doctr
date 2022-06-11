@@ -39,6 +39,7 @@ class SignUpViewModel extends FormViewModel {
     }
     //user created
     //navigate to complete registration view
-    _navigationService.clearStackAndShow(Routes.completeRegistrationView);
+    _navigationService.pushNamedAndRemoveUntil(Routes.completeRegistrationView,
+        predicate: (_) => false);
   }
 }

@@ -51,6 +51,7 @@ class CompleteRegistrationViewModel extends FormViewModel {
           title: 'Error', description: res.exception?.message);
     }
     //navigate user to home
-    _navigationService.clearStackAndShow(Routes.homeView);
+    _navigationService.pushNamedAndRemoveUntil(Routes.homeView,
+        predicate: (_) => false);
   }
 }
