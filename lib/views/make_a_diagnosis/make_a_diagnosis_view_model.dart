@@ -11,12 +11,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:doctr/services/api_services.dart';
 
 class MakeADiagnosisViewModel extends FormViewModel {
-  String? _symp_1;
-  String? _symp_2;
-  String? _symp_3;
-  String? _symp_4;
-  String? _symp_5;
-  List<String>? symps;
+  // List<String>? symps;
   bool loading = false;
   final _snackbarService = locator<SnackbarService>();
   final _apiService = locator<ApiServices>();
@@ -27,11 +22,8 @@ class MakeADiagnosisViewModel extends FormViewModel {
       locator<DiagnosisResponseStateService>();
   final _symptomsStateService = locator<SymptomsStateService>();
 
-  String? get symp_1 => _symp_1;
-  String? get symp_2 => _symp_2;
-  String? get symp_3 => _symp_3;
-  String? get symp_4 => _symp_4;
-  String? get symp_5 => _symp_5;
+  final Set<String> _selectedSymtoms = <String>{};
+
   Future onload() async {
     if (_symptomsStateService.data.isEmpty) {
       var loaded = _cacheService.loadSymptoms();
@@ -58,30 +50,6 @@ class MakeADiagnosisViewModel extends FormViewModel {
     }
   }
 
-  void setSelectedValue(String key, String? value) {
-    setData({...formValueMap, key: value});
-    switch (key) {
-      case 'symp_1':
-        _symp_1 = value;
-        break;
-      case 'symp_2':
-        _symp_2 = value;
-        break;
-      case 'symp_3':
-        _symp_3 = value;
-        break;
-      case 'symp_4':
-        _symp_4 = value;
-        break;
-      case 'symp_5':
-        _symp_5 = value;
-        break;
-      default:
-        throw Exception('Invalid key');
-    }
-    notifyListeners();
-  }
-
   List<String> get symptoms => _symptomsStateService.data;
 
   Future onStartDiagnosis() async {
@@ -105,7 +73,7 @@ class MakeADiagnosisViewModel extends FormViewModel {
         diseaseName: res.data['disease'],
         createdAt: DateTime.now(),
         symptoms: formatSymptoms);
-    var response = await _cloudFirestoreServices.saveDataToCloudDb(model);
+    await _cloudFirestoreServices.saveDataToCloudDb(model);
     _diagnosisResponseStateService.addToList = model;
     loading = false;
     notifyListeners();
@@ -113,9 +81,20 @@ class MakeADiagnosisViewModel extends FormViewModel {
         title: 'Diagnosis Report', description: res.data['disease']);
   }
 
-  List<String> get formatSymptoms =>
-      formValueMap.values.cast<String>().toSet().toList();
+  List<String> get formatSymptoms => _selectedSymtoms.toList();
 
   @override
   void setFormStatus() {}
+
+  void updateChips(String? res) {
+    if (res != null) {
+      _selectedSymtoms.add(res);
+      notifyListeners();
+    }
+  }
+
+  void onDeleteChip(String e) {
+    _selectedSymtoms.remove(e);
+    notifyListeners();
+  }
 }
