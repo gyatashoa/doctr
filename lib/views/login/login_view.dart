@@ -54,7 +54,7 @@ class LoginView extends ViewModelBuilderWidget<LoginViewModel> {
                         padding: const EdgeInsets.all(5.0),
                         child: Center(
                           child: InkWell(
-                            onTap: () {},
+                            onTap: viewModel.navigateToSignUp,
                             child: RichText(
                               text: TextSpan(
                                   style: Theme.of(context)

@@ -52,7 +52,7 @@ class LoginViewModel extends FormViewModel {
       return _dialogServices.showDialog(title: 'Error', description: res);
     }
     return _navigationServices.pushNamedAndRemoveUntil(Routes.homeView,
-        predicate: ((route) => true));
+        predicate: ((route) => false));
   }
 
   set viewPassword(bool view) {
@@ -62,4 +62,8 @@ class LoginViewModel extends FormViewModel {
 
   @override
   void setFormStatus() {}
+
+  void navigateToSignUp() {
+    _navigationServices.navigateTo(Routes.signUpView);
+  }
 }

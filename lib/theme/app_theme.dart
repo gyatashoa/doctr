@@ -19,6 +19,12 @@ class AppTheme {
           textStyle:
               MaterialStateTextStyle.resolveWith((states) => defualtTextStyle),
         )),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+            type: BottomNavigationBarType.shifting,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            unselectedItemColor: Colors.black45,
+            selectedIconTheme: IconThemeData(color: Colors.black)),
         textTheme: TextTheme(
           subtitle1: defualtTextStyle,
           // bodySmall: defualtTextStyle,
