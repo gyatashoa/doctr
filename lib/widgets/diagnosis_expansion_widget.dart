@@ -1,6 +1,7 @@
 import 'package:doctr/models/diagnosis_response_model.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class DiagnosisExpansionWidget extends StatelessWidget {
   final DiagnosisResponseModel data;
@@ -32,7 +33,7 @@ class DiagnosisExpansionWidget extends StatelessWidget {
                   ),
                 ))
             .toList(),
-        subtitle: Text(DateTime.now().toIso8601String()),
+        subtitle: Text(timeago.format(data.createdAt)),
         title: Text(
           data.diseaseName,
           style: const TextStyle(color: primaryColor),

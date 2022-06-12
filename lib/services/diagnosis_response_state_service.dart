@@ -13,9 +13,11 @@ class DiagnosisResponseStateService with ReactiveServiceMixin {
 
   set setData(List<DiagnosisResponseModel> data) {
     _data.value = data;
+    _data.value.sort();
   }
 
   set addToList(DiagnosisResponseModel data) {
     _data.value.add(data);
+    _data.value.sort();
   }
 }

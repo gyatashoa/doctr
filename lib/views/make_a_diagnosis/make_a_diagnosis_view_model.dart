@@ -11,7 +11,6 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:doctr/services/api_services.dart';
 
 class MakeADiagnosisViewModel extends FormViewModel {
-  // List<String>? symps;
   bool loading = false;
   final _snackbarService = locator<SnackbarService>();
   final _apiService = locator<ApiServices>();

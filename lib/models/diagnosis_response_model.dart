@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DiagnosisResponseModel {
+class DiagnosisResponseModel extends Comparable<DiagnosisResponseModel> {
   final String diseaseName;
   final List<String> symptoms;
   final DateTime createdAt;
@@ -24,4 +24,9 @@ class DiagnosisResponseModel {
         'createdAt': Timestamp.fromDate(createdAt),
         'symptoms': symptoms
       };
+
+  @override
+  int compareTo(DiagnosisResponseModel other) {
+    return other.createdAt.compareTo(createdAt);
+  }
 }
