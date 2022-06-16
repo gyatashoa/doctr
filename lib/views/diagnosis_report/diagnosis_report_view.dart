@@ -4,6 +4,7 @@ import 'package:doctr/views/diagnosis_report/diagnosis_report_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:stacked/stacked.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class DiagnosisReportView extends HookWidget {
   final DiagnosisResponseModel diagnosisResponseModel;
@@ -53,9 +54,27 @@ class DiagnosisReportView extends HookWidget {
                         labelText: 'Probability:',
                       ),
                     ),
-                    Container(
-                      height: 200,
-                      color: Colors.red,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: devSize.height * .3,
+                        child: PieChart(PieChartData(sections: [
+                          PieChartSectionData(
+                              title: (diagnosisResponseModel.probability * 100)
+                                      .toStringAsFixed(2) +
+                                  '%',
+                              color: diagnosisResponseModel.probability > .5
+                                  ? Colors.green
+                                  : Colors.red,
+                              titleStyle: const TextStyle(color: Colors.white),
+                              value: diagnosisResponseModel.probability * 100),
+                          PieChartSectionData(
+                              title: '',
+                              color: Colors.white,
+                              value: 100 -
+                                  diagnosisResponseModel.probability * 100)
+                        ])),
+                      ),
                     ),
                     const Text(
                       'Prescriptions:',
@@ -63,8 +82,11 @@ class DiagnosisReportView extends HookWidget {
                           TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                     ),
                     diagnosisResponseModel.prescriptions.isEmpty
-                        ? const Text(
-                            'Please we have no prescriptions for this disease')
+                        ? const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text(
+                                'Please we have no prescriptions for this disease'),
+                          )
                         : Wrap(
                             children: diagnosisResponseModel.prescriptions
                                 .map((e) => Padding(
