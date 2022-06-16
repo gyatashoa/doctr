@@ -1,0 +1,4 @@
+enum Condition {
+  FIT,
+  DIABETIC,
+}

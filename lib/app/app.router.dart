@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
+import '../models/diagnosis_response_model.dart';
 import '../views/check_diagnosis_history/check_diagnosis_history_view.dart';
 import '../views/check_user_profile/check_user_profile_view.dart';
+import '../views/diagnosis_report/diagnosis_report_view.dart';
 import '../views/home/home_view.dart';
 import '../views/login/login_view.dart';
 import '../views/make_a_diagnosis/make_a_diagnosis_view.dart';
@@ -29,6 +31,7 @@ class Routes {
   static const String checkDiagnosisHistoryView =
       '/check-diagnosis-history-view';
   static const String completeRegistrationView = '/complete-registration-view';
+  static const String diagnosisReportView = '/diagnosis-report-view';
   static const all = <String>{
     loginView,
     signUpView,
@@ -38,6 +41,7 @@ class Routes {
     termsAndConditions,
     checkDiagnosisHistoryView,
     completeRegistrationView,
+    diagnosisReportView,
   };
 }
 
@@ -53,6 +57,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.termsAndConditions, page: TermsAndConditions),
     RouteDef(Routes.checkDiagnosisHistoryView, page: CheckDiagnosisHistoryView),
     RouteDef(Routes.completeRegistrationView, page: CompleteRegistrationView),
+    RouteDef(Routes.diagnosisReportView, page: DiagnosisReportView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -105,5 +110,27 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    DiagnosisReportView: (data) {
+      var args = data.getArgs<DiagnosisReportViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => DiagnosisReportView(
+          key: args.key,
+          diagnosisResponseModel: args.diagnosisResponseModel,
+        ),
+        settings: data,
+      );
+    },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// DiagnosisReportView arguments holder class
+class DiagnosisReportViewArguments {
+  final Key? key;
+  final DiagnosisResponseModel diagnosisResponseModel;
+  DiagnosisReportViewArguments(
+      {this.key, required this.diagnosisResponseModel});
 }
