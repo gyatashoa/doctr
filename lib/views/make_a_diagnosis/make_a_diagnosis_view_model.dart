@@ -1,4 +1,5 @@
 import 'package:doctr/app/app.locator.dart';
+import 'package:doctr/app/app.router.dart';
 import 'package:doctr/models/diagnosis_response_model.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/cloud_firestore_services.dart';
@@ -20,6 +21,7 @@ class MakeADiagnosisViewModel extends FormViewModel {
   final _diagnosisResponseStateService =
       locator<DiagnosisResponseStateService>();
   final _symptomsStateService = locator<SymptomsStateService>();
+  final _navigationService = locator<NavigationService>();
 
   final Set<String> _selectedSymtoms = <String>{};
 
@@ -70,7 +72,7 @@ class MakeADiagnosisViewModel extends FormViewModel {
     }
     var model = DiagnosisResponseModel(
         diseaseName: res.data['disease'],
-        prescriptions: res.data['prescriptions'],
+        prescriptions: res.data['prescriptions'].cast<String>(),
         probability: res.data['probability'],
         createdAt: DateTime.now(),
         symptoms: formatSymptoms);
@@ -78,8 +80,8 @@ class MakeADiagnosisViewModel extends FormViewModel {
     _diagnosisResponseStateService.addToList = model;
     loading = false;
     notifyListeners();
-    _dialogService.showDialog(
-        title: 'Diagnosis Report', description: res.data['disease']);
+    _navigationService.navigateTo(Routes.diagnosisReportView,
+        arguments: DiagnosisReportViewArguments(diagnosisResponseModel: model));
   }
 
   List<String> get formatSymptoms => _selectedSymtoms.toList();
