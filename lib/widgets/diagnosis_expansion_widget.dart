@@ -5,7 +5,9 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class DiagnosisExpansionWidget extends StatelessWidget {
   final DiagnosisResponseModel data;
-  const DiagnosisExpansionWidget({Key? key, required this.data})
+  final void Function(DiagnosisResponseModel data) navigateToDiagnosisReport;
+  const DiagnosisExpansionWidget(
+      {Key? key, required this.data, required this.navigateToDiagnosisReport})
       : super(key: key);
 
   @override
@@ -34,6 +36,9 @@ class DiagnosisExpansionWidget extends StatelessWidget {
                 ))
             .toList(),
         subtitle: Text(timeago.format(data.createdAt)),
+        trailing: IconButton(
+            onPressed: () => navigateToDiagnosisReport(data),
+            icon: const Icon(Icons.fullscreen)),
         title: Text(
           data.diseaseName,
           style: const TextStyle(color: primaryColor),

@@ -12,8 +12,9 @@ class HistoryBody extends StatelessWidget {
         viewModelBuilder: () => HistoryBodyViewModel(),
         builder: (_, model, child) => ListView.separated(
             physics: const BouncingScrollPhysics(),
-            itemBuilder: (_, i) =>
-                DiagnosisExpansionWidget(data: model.data[i]),
+            itemBuilder: (_, i) => DiagnosisExpansionWidget(
+                navigateToDiagnosisReport: model.navigateToDiagnosisReport,
+                data: model.data[i]),
             separatorBuilder: (_, i) => const Divider(),
             itemCount: model.data.length));
   }
