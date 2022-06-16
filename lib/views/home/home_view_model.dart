@@ -20,8 +20,7 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> logout() async {
     await _authService.signOut();
-    await _navigationService.pushNamedAndRemoveUntil(Routes.loginView,
-        predicate: ((route) => false));
+    await _navigationService.clearStackAndShow(Routes.loginView);
   }
 
   Future<void> aboutThisApp(BuildContext context) async {

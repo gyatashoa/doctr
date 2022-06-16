@@ -1,5 +1,6 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
+import 'package:doctr/models/condition.dart';
 import 'package:doctr/models/gender.dart';
 import 'package:doctr/models/user_additional_data_model.dart';
 import 'package:doctr/services/cloud_firestore_services.dart';
@@ -13,6 +14,8 @@ class CompleteRegistrationViewModel extends FormViewModel {
   final _navigationService = locator<NavigationService>();
   final _cloudService = locator<CloudFirestoreServices>();
   Gender currentGender = Gender.MALE;
+  Condition currentCondition = Condition.FIT;
+  List<Condition> conditions = [Condition.FIT, Condition.DIABETIC];
   DateTime? dob;
 
   void onGenderChanged(Gender? gender) {
@@ -44,7 +47,8 @@ class CompleteRegistrationViewModel extends FormViewModel {
     //Upload user data to cloud firestore
     setBusy(true);
     var res = await _cloudService.uploadUserAdditionalData(
-        UserAdditionalDataModel(dob: dob!, gender: currentGender));
+        UserAdditionalDataModel(
+            dob: dob!, condition: currentCondition, gender: currentGender));
     setBusy(false);
     if (res.exception != null) {
       return _dialogService.showDialog(
@@ -53,5 +57,10 @@ class CompleteRegistrationViewModel extends FormViewModel {
     //navigate user to home
     _navigationService.pushNamedAndRemoveUntil(Routes.homeView,
         predicate: (_) => false);
+  }
+
+  void changeCondition(Condition? value) {
+    currentCondition = value ?? currentCondition;
+    notifyListeners();
   }
 }
