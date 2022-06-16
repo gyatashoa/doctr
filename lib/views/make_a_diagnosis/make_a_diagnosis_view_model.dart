@@ -70,6 +70,8 @@ class MakeADiagnosisViewModel extends FormViewModel {
     }
     var model = DiagnosisResponseModel(
         diseaseName: res.data['disease'],
+        prescriptions: res.data['prescriptions'],
+        probability: res.data['probability'],
         createdAt: DateTime.now(),
         symptoms: formatSymptoms);
     await _cloudFirestoreServices.saveDataToCloudDb(model);
