@@ -1,6 +1,7 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
 import 'package:doctr/services/auth_services.dart';
+import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/views/check_user_profile/check_user_profile_view.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -10,6 +11,7 @@ class HomeViewModel extends BaseViewModel {
   int _index = 0;
   final _authService = locator<AuthServices>();
   final _navigationService = locator<NavigationService>();
+  final _cacheService = locator<CacheServices>();
 
   int get index => _index;
 
@@ -19,6 +21,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> logout() async {
+    await _cacheService.deleteUserAddData();
     await _authService.signOut();
     await _navigationService.clearStackAndShow(Routes.loginView);
   }

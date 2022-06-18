@@ -1,6 +1,9 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
 import 'package:doctr/config/app_properties.dart';
+import 'package:doctr/models/condition.dart';
+import 'package:doctr/models/gender.dart';
+import 'package:doctr/models/user_additional_data_model.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/symtoms_state_service.dart';
@@ -17,6 +20,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
+  Hive.registerAdapter(UserAdditionalDataModelAdapter());
+  Hive.registerAdapter(GenderAdapter());
+  Hive.registerAdapter(ConditionAdapter());
   await setupLocator();
   loadSnackbarConfig();
   final authServices = locator<AuthServices>();

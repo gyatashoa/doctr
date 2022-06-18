@@ -37,7 +37,6 @@ class CloudFirestoreServices {
           .get();
       return ApiResponse.data(data: data.data());
     } on Exception catch (e) {
-      print(e);
       return ApiResponse.error(
         exception: CloudFirestoreException(
             message: 'Error while uploading data to firebase',
@@ -46,22 +45,41 @@ class CloudFirestoreServices {
     }
   }
 
-  Future<ApiResponse> uploadUserAdditionalData(
-      UserAdditionalDataModel data) async {
+  Future<ApiResponse<UserAdditionalDataModel, CloudFirestoreException>>
+      uploadUserAdditionalData(UserAdditionalDataModel data) async {
     var uid = _authService.currentUser?.uid;
 
     var ref = _instance.collection(userCollection);
     try {
       await ref.doc(uid).set(data.toJson);
-      //     .collection('reports')
-      //     .withConverter<DiagnosisResponseModel>(
-      //         fromFirestore: (val, _) =>
-      //             DiagnosisResponseModel.fromJson(val.data() ?? {}),
-      //         toFirestore: (m, _) => m.toJson())
-      //     .get();
       return ApiResponse.data(data: data);
     } on Exception {
       return ApiResponse.error(
+        exception: CloudFirestoreException(
+            message: 'Error while uploading data to firebase',
+            details: 'Unable to upload data to firebase'),
+      );
+    }
+  }
+
+  Future<ApiResponse<UserAdditionalDataModel, CloudFirestoreException>>
+      getUserAdditionalData() async {
+    var uid = _authService.currentUser?.uid;
+
+    var ref = _instance.collection(userCollection);
+    try {
+      var data = await ref
+          .doc(uid)
+          .withConverter<UserAdditionalDataModel>(
+              fromFirestore: (snapshot, options) =>
+                  UserAdditionalDataModel.fromJson(snapshot.data() ?? {}),
+              toFirestore: (model, _) => model.toJson)
+          .get();
+      return ApiResponse<UserAdditionalDataModel, CloudFirestoreException>.data(
+          data: data.data());
+    } on Exception {
+      return ApiResponse<UserAdditionalDataModel,
+          CloudFirestoreException>.error(
         exception: CloudFirestoreException(
             message: 'Error while uploading data to firebase',
             details: 'Unable to upload data to firebase'),

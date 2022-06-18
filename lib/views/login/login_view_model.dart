@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
 import 'package:doctr/services/auth_services.dart';
+import 'package:doctr/services/cache_service.dart';
+import 'package:doctr/services/cloud_firestore_services.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -10,6 +12,8 @@ class LoginViewModel extends FormViewModel {
   final _authServices = locator<AuthServices>();
   final _dialogServices = locator<DialogService>();
   final _navigationServices = locator<NavigationService>();
+  final _cloudService = locator<CloudFirestoreServices>();
+  final _cacheService = locator<CacheServices>();
 
   bool _viewPassword = false;
   bool _loginloading = false;
@@ -32,10 +36,18 @@ class LoginViewModel extends FormViewModel {
   Future loginPressed({required String email, required String password}) async {
     setLoginLoading = true;
     var res = await _authServices.login(email: email, password: password);
-    setLoginLoading = false;
     if (res is String) {
+      setLoginLoading = false;
       return _dialogServices.showDialog(title: 'Error', description: res);
     }
+    //get data from cloud
+    var result = (await _cloudService.getUserAdditionalData()).data;
+    if (result == null) {
+      //show error dialog
+      return;
+    }
+    //cache user details
+    await _cacheService.setUserAddData(result);
     return _navigationServices.pushNamedAndRemoveUntil(Routes.homeView,
         predicate: ((route) => true));
   }
