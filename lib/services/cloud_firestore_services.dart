@@ -45,8 +45,8 @@ class CloudFirestoreServices {
     }
   }
 
-  Future<ApiResponse> uploadUserAdditionalData(
-      UserAdditionalDataModel data) async {
+  Future<ApiResponse<UserAdditionalDataModel, CloudFirestoreException>>
+      uploadUserAdditionalData(UserAdditionalDataModel data) async {
     var uid = _authService.currentUser?.uid;
 
     var ref = _instance.collection(userCollection);
