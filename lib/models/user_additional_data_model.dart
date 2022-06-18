@@ -1,10 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctr/models/condition.dart';
 import 'package:doctr/models/gender.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
+part 'user_additional_data_model.g.dart';
+
+@HiveType(typeId: 1)
 class UserAdditionalDataModel {
+  @HiveField(0)
   final DateTime dob;
+  @HiveField(1)
   final Gender gender;
+  @HiveField(2)
   final Condition condition;
 
   UserAdditionalDataModel(
