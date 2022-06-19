@@ -14,6 +14,16 @@ void loadSnackbarConfig() {
             Icons.error,
             color: Colors.red,
           )));
+
+  snackBarService.registerCustomSnackbarConfig(
+      variant: SnackbarVariant.success,
+      config: SnackbarConfig(
+          snackStyle: SnackStyle.FLOATING,
+          textColor: Colors.white,
+          icon: const Icon(
+            Icons.check_circle,
+            color: Colors.green,
+          )));
 }
 
 enum SnackbarVariant {

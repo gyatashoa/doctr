@@ -37,4 +37,5 @@ Future setupLocator(
   locator.registerLazySingleton(() => CloudFirestoreServices());
   locator.registerLazySingleton(() => DiagnosisResponseStateService());
   locator.registerLazySingleton(() => SymptomsStateService());
+  locator.registerLazySingleton(() => BottomSheetService());
 }

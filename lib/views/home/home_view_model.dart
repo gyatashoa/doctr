@@ -3,7 +3,8 @@ import 'package:doctr/app/app.router.dart';
 import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/services/cache_service.dart';
-import 'package:doctr/views/check_user_profile/check_user_profile_view.dart';
+import 'package:doctr/utils/bottom_sheet_config.dart';
+import 'package:doctr/utils/snackbar_config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
@@ -14,6 +15,8 @@ class HomeViewModel extends BaseViewModel {
   final _authService = locator<AuthServices>();
   final _navigationService = locator<NavigationService>();
   final _cacheService = locator<CacheServices>();
+  final _bottomSheet = locator<BottomSheetService>();
+  final _snackbarService = locator<SnackbarService>();
 
   int get index => _index;
 
@@ -43,5 +46,21 @@ class HomeViewModel extends BaseViewModel {
 
   void termsAndCondition() async {
     _navigationService.navigateTo(Routes.termsAndConditions);
+  }
+
+  Future? onReportAProblem() async {
+    var res = await _bottomSheet.showCustomSheet(
+      variant: BottomSheetType.floatingWithTextField,
+    );
+    if (res == null) return;
+    if (res.data != null) {
+      return _snackbarService.showCustomSnackBar(
+        variant: SnackbarVariant.error,
+        message: 'Error sending report',
+      );
+    }
+    _snackbarService.showCustomSnackBar(
+        variant: SnackbarVariant.success,
+        message: 'Report sent successfully!!');
   }
 }

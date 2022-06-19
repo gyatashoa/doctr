@@ -35,6 +35,7 @@ import 'package:stacked_services/stacked_services.dart';
   Presolve(classType: CacheServices, presolveUsing: CacheServices.presolve),
   LazySingleton(classType: CloudFirestoreServices),
   LazySingleton(classType: DiagnosisResponseStateService),
-  LazySingleton(classType: SymptomsStateService)
+  LazySingleton(classType: SymptomsStateService),
+  LazySingleton(classType: BottomSheetService)
 ])
 class AppSetup {}

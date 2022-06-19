@@ -62,6 +62,26 @@ class CloudFirestoreServices {
     }
   }
 
+  Future<ApiResponse?> reportAProblem(String message) async {
+    var ref = _instance.collection('reports');
+    var uid = _authService.currentUser?.uid;
+
+    try {
+      await ref.doc().set({
+        'id': uid,
+        'report': message,
+        'createdAt': FieldValue.serverTimestamp()
+      });
+    } on Exception {
+      return ApiResponse.error(
+        exception: CloudFirestoreException(
+            message: 'Error while uploading data to firebase',
+            details: 'Unable to upload data to firebase'),
+      );
+    }
+    return null;
+  }
+
   Future<ApiResponse<UserAdditionalDataModel, CloudFirestoreException>>
       getUserAdditionalData() async {
     var uid = _authService.currentUser?.uid;
