@@ -3,9 +3,12 @@ import 'package:doctr/app/app.router.dart';
 import 'package:doctr/models/condition.dart';
 import 'package:doctr/models/gender.dart';
 import 'package:doctr/models/user_additional_data_model.dart';
+import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/cloud_firestore_services.dart';
 import 'package:doctr/utils/snackbar_config.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -40,7 +43,7 @@ class CompleteRegistrationViewModel extends FormViewModel {
     return null;
   }
 
-  Future onSubmit() async {
+  Future onSubmit(BuildContext context) async {
     var msg = _isFormValid();
     if (msg != null) {
       return _snackBarService.showCustomSnackBar(
@@ -57,6 +60,8 @@ class CompleteRegistrationViewModel extends FormViewModel {
           title: 'Error', description: res.exception?.message);
     }
     await _cacheService.setUserAddData(res.data!);
+    Provider.of<UserAdditionalDataProvider>(context, listen: false)
+        .setUserAddData = res.data;
     setBusy(false);
     //navigate user to home
     _navigationService.pushNamedAndRemoveUntil(Routes.homeView,

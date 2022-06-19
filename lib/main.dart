@@ -4,6 +4,7 @@ import 'package:doctr/config/app_properties.dart';
 import 'package:doctr/models/condition.dart';
 import 'package:doctr/models/gender.dart';
 import 'package:doctr/models/user_additional_data_model.dart';
+import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/symtoms_state_service.dart';
@@ -14,6 +15,7 @@ import 'package:doctr/views/login/login_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 Future<void> main() async {
@@ -29,28 +31,42 @@ Future<void> main() async {
   final cacheService = locator<CacheServices>();
   final symptomsStateService = locator<SymptomsStateService>();
   symptomsStateService.setData = cacheService.loadSymptoms() ?? [];
+  bool isLoggedIn = false;
+  UserAdditionalDataModel? userAdditionalDataModel;
+  if (authServices.currentUser != null) {
+    isLoggedIn = true;
+    userAdditionalDataModel = await cacheService.getUserAddData();
+  }
+
   runApp(MyApp(
-    authServices: authServices,
+    isLoggedIn: isLoggedIn,
+    userAdditionalDataModel: userAdditionalDataModel,
   ));
 }
 
 class MyApp extends StatelessWidget {
-  final AuthServices authServices;
-  const MyApp({
-    Key? key,
-    required this.authServices,
-  }) : super(key: key);
+  final bool isLoggedIn;
+  final UserAdditionalDataModel? userAdditionalDataModel;
+  const MyApp(
+      {Key? key,
+      required this.isLoggedIn,
+      required this.userAdditionalDataModel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appName,
-      theme: AppTheme.lightTheme,
-      home: authServices.currentUser == null
-          ? const LoginView()
-          : const HomeView(),
-      onGenerateRoute: StackedRouter().onGenerateRoute,
-      navigatorKey: StackedService.navigatorKey,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<UserAdditionalDataProvider>(
+            create: (_) => UserAdditionalDataProvider(userAdditionalDataModel))
+      ],
+      child: MaterialApp(
+        title: appName,
+        theme: AppTheme.lightTheme,
+        home: !isLoggedIn ? const LoginView() : const HomeView(),
+        onGenerateRoute: StackedRouter().onGenerateRoute,
+        navigatorKey: StackedService.navigatorKey,
+      ),
     );
   }
 }

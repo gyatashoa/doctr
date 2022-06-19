@@ -75,7 +75,7 @@ extension on SettingsTiles {
         viewModel.termsAndCondition();
         break;
       case SettingsTiles.LOGOUT:
-        viewModel.logout();
+        viewModel.logout(context);
         break;
     }
   }

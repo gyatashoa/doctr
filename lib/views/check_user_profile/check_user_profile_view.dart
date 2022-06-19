@@ -1,7 +1,9 @@
+import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/check_user_profile/check_user_profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 
 class CheckUserProfileView extends HookWidget {
@@ -16,14 +18,15 @@ class CheckUserProfileView extends HookWidget {
     final dobController = useTextEditingController();
     final currentCondtionController = useTextEditingController();
     final createdAtController = useTextEditingController();
+    var user = Provider.of<UserAdditionalDataProvider>(context).getUserAddData;
     return ViewModelBuilder<CheckUserProfileViewModel>.nonReactive(
         viewModelBuilder: () => CheckUserProfileViewModel(),
         builder: (_, model, __) {
           emailController.text = model.user?.email ?? '';
-          nameController.text = model.user?.displayName ?? 'Asamoah Felix';
-          genderController.text = 'MALE';
-          dobController.text = '21/10/1999';
-          currentCondtionController.text = 'Fit';
+          nameController.text = model.user?.displayName ?? '';
+          genderController.text = user!.gender.name;
+          dobController.text = user.dob.dateTimeString;
+          currentCondtionController.text = user.condition.name;
           createdAtController.text =
               model.user?.metadata.creationTime?.dateTimeString ?? '';
           return Scaffold(

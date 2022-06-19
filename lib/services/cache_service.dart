@@ -25,18 +25,18 @@ class CacheServices {
   }
 
   Future<UserAdditionalDataModel?> getUserAddData() async {
-    _userAdditionalDataBox ??= await Hive.openBox(boxName);
-    return _userAdditionalDataBox?.getAt(0);
+    _userAdditionalDataBox ??= await Hive.openBox(userAdditionalBox);
+    return _userAdditionalDataBox?.get('user');
   }
 
   Future<void> setUserAddData(UserAdditionalDataModel data) async {
-    _userAdditionalDataBox ??= await Hive.openBox(boxName);
-    _userAdditionalDataBox?.putAt(0, data);
+    _userAdditionalDataBox ??= await Hive.openBox(userAdditionalBox);
+    _userAdditionalDataBox?.put('user', data);
   }
 
   Future<void> deleteUserAddData() async {
-    _userAdditionalDataBox ??= await Hive.openBox(boxName);
-    await _userAdditionalDataBox?.delete(0);
+    _userAdditionalDataBox ??= await Hive.openBox(userAdditionalBox);
+    await _userAdditionalDataBox?.delete('user');
     await _userAdditionalDataBox?.clear();
   }
 

@@ -1,9 +1,11 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
+import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/views/check_user_profile/check_user_profile_view.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -20,7 +22,9 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> logout() async {
+  Future<void> logout(BuildContext context) async {
+    Provider.of<UserAdditionalDataProvider>(context, listen: false)
+        .setUserAddData = null;
     await _cacheService.deleteUserAddData();
     await _authService.signOut();
     await _navigationService.clearStackAndShow(Routes.loginView);
