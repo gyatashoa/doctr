@@ -134,7 +134,7 @@ class CompleteRegistrationView extends HookWidget {
                                       backgroundColor: const Color(0xFF3A00FF)),
                                   onPressed: viewModel.isBusy
                                       ? null
-                                      : viewModel.onSubmit,
+                                      : () => viewModel.onSubmit(context),
                                   child: viewModel.isBusy
                                       ? Transform.scale(
                                           scale: .3,

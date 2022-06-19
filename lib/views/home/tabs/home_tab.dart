@@ -16,11 +16,7 @@ class HomeTab extends HookViewModelWidget<HomeViewModel> {
 
   @override
   Widget buildViewModelWidget(BuildContext context, HomeViewModel model) {
-    AuthServices? authService;
-
-    useEffect(() {
-      authService = locator<AuthServices>();
-    }, []);
+    AuthServices authService = locator<AuthServices>();
     //TODO: Remove after api is implemented
     List<NewsModel> _news = [
       NewsModel(
@@ -60,7 +56,7 @@ class HomeTab extends HookViewModelWidget<HomeViewModel> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: devSize.width * .1),
             child: Text(
-              'Hi ${authService?.currentUser?.displayName ?? ''}',
+              'Hi ${authService.currentUser?.displayName ?? ''}',
               style: const TextStyle(color: Colors.white, fontSize: 25),
             ),
           ),

@@ -37,7 +37,7 @@ class DiagnosisTab extends ViewModelWidget<HomeViewModel> {
             child: ListView.separated(
           itemCount: tiles.length,
           itemBuilder: (_, i) => ListTile(
-            onTap: tiles[i].onTap,
+            onTap: () => tiles[i].onTap(model),
             title: Text(
               tiles[i].repr(),
               style: const TextStyle(color: Colors.white, fontSize: 16),
@@ -62,7 +62,7 @@ enum DiagnosisTiles {
 extension on DiagnosisTiles {
   String repr() => this.toString().split('.').last.replaceAll(RegExp('_'), ' ');
 
-  void onTap() {
+  void onTap(HomeViewModel model) {
     var navigationService = locator<NavigationService>();
     switch (this) {
       case DiagnosisTiles.MAKE_A_DIAGNOSIS:
@@ -72,7 +72,7 @@ extension on DiagnosisTiles {
         navigationService.navigateTo(Routes.checkDiagnosisHistoryView);
         break;
       case DiagnosisTiles.REPORT_A_PROBLEM:
-        // TODO: Handle this case.
+        model.onReportAProblem();
         break;
     }
   }

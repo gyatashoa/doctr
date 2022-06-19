@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
+import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/cloud_firestore_services.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -33,7 +36,10 @@ class LoginViewModel extends FormViewModel {
     notifyListeners();
   }
 
-  Future loginPressed({required String email, required String password}) async {
+  Future loginPressed(
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
     setLoginLoading = true;
     var res = await _authServices.login(email: email, password: password);
     if (res is String) {
@@ -48,6 +54,8 @@ class LoginViewModel extends FormViewModel {
     }
     //cache user details
     await _cacheService.setUserAddData(result);
+    Provider.of<UserAdditionalDataProvider>(context, listen: false)
+        .setUserAddData = result;
     return _navigationServices.pushNamedAndRemoveUntil(Routes.homeView,
         predicate: ((route) => true));
   }

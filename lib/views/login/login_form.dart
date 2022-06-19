@@ -103,6 +103,7 @@ class LoginForm extends HookViewModelWidget<LoginViewModel> {
                         viewModel.isLoginwithGoogleLoading
                     ? null
                     : () => viewModel.loginPressed(
+                        context: context,
                         email: emailController.text,
                         password: passwordController.text),
                 child: viewModel.isLoginLoading
