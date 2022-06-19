@@ -3,6 +3,7 @@ import 'package:doctr/models/news_model.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
+import 'package:doctr/views/home/tabs/news_section/news_section.dart';
 import 'package:doctr/widgets/emoji_btn.dart';
 import 'package:doctr/widgets/new_tile.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,7 @@ class HomeTab extends HookViewModelWidget<HomeViewModel> {
           const SizedBox(
             height: 10,
           ),
-          _NewsSection(news: _news)
+          NewsSection(news: _news)
         ],
       ),
     );
@@ -156,32 +157,6 @@ class _DiseaseTextField extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _NewsSection extends StatelessWidget {
-  const _NewsSection({Key? key, required this.news}) : super(key: key);
-  final List<NewsModel> news;
-
-  @override
-  Widget build(BuildContext context) {
-    final devSize = MediaQuery.of(context).size;
-    // print(devSize.height * .3);
-    return SizedBox(
-      height: devSize.height * .3,
-      width: double.infinity,
-      child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          scrollDirection: Axis.horizontal,
-          itemCount: news.length,
-          itemBuilder: (_, i) => Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 2, horizontal: 8.0),
-                child: NewsTile(
-                  news: news[i],
-                ),
-              )),
     );
   }
 }
