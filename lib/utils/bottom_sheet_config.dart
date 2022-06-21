@@ -26,12 +26,21 @@ void setupBottomSheetUi() {
               completer: completer,
               controller: TextEditingController(text: ''),
             ),
+    BottomSheetType.choice: (context, sheetRequest, completer) =>
+        _ChoiceBottomSheet(
+          request: sheetRequest,
+          completer: completer,
+        ),
   };
 
   bottomSheetService.setCustomSheetBuilders(builders);
 }
 
-enum BottomSheetType { floatingWithTextField, floatingWithTextFieldSync }
+enum BottomSheetType {
+  floatingWithTextField,
+  choice,
+  floatingWithTextFieldSync
+}
 
 class _FloatingBoxBottomSheet extends StatefulWidget {
   final SheetRequest? request;
@@ -119,7 +128,7 @@ class _FloatingBoxBottomSheetState extends State<_FloatingBoxBottomSheet> {
 
 class _FloatingBoxBottomWithTextFieldSync extends StatelessWidget {
   final TextEditingController controller;
-  final SheetRequest<String>? request;
+  final SheetRequest? request;
   final Function(SheetResponse)? completer;
   const _FloatingBoxBottomWithTextFieldSync(
       {Key? key, this.completer, this.request, required this.controller})
@@ -149,8 +158,7 @@ class _FloatingBoxBottomWithTextFieldSync extends StatelessWidget {
               ),
             ),
             TextButton(
-                style: TextButton.styleFrom(
-                    shape: const CircleBorder(), backgroundColor: primaryColor),
+                style: TextButton.styleFrom(),
                 onPressed: () {
                   if (completer != null) {
                     completer!(SheetResponse(data: controller.text));
@@ -159,6 +167,41 @@ class _FloatingBoxBottomWithTextFieldSync extends StatelessWidget {
                 child: const Text('ADD'))
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ChoiceBottomSheet extends StatelessWidget {
+  final SheetRequest? request;
+  final Function(SheetResponse)? completer;
+
+  const _ChoiceBottomSheet(
+      {Key? key, required this.request, required this.completer})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextButton(
+              onPressed: () {
+                completer!(SheetResponse(data: 'Symptoms'));
+              },
+              child: const Text('Symptoms')),
+          TextButton(
+              onPressed: () {
+                completer!(SheetResponse(data: 'Prescriptions'));
+              },
+              child: const Text('Prescriptions')),
+          TextButton(
+              onPressed: () {
+                completer!(SheetResponse(data: 'Disease'));
+              },
+              child: const Text('Disease')),
+        ],
       ),
     );
   }

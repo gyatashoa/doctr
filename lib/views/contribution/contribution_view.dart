@@ -1,5 +1,6 @@
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/contribution/contribution_view_model.dart';
+import 'package:doctr/widgets/header_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -14,8 +15,8 @@ class ContributionView extends StatelessWidget {
         builder: (_, model, __) => Scaffold(
               appBar: AppBar(
                 actions: [
-                  IconButton(onPressed: () {}, icon: Icon(Icons.sick)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.medication))
+                  IconButton(
+                      onPressed: model.onAdd, icon: const Icon(Icons.add)),
                 ],
                 centerTitle: true,
                 backgroundColor: primaryColor,
@@ -30,6 +31,11 @@ class ContributionView extends StatelessWidget {
                   child: Column(children: [
                     const SizedBox(
                       height: 15,
+                    ),
+                    HeaderChip(
+                        onTap: model.onAddToSpecific, headerText: 'Symptoms'),
+                    const SizedBox(
+                      height: 10,
                     ),
                     model.addedSymptoms.isEmpty
                         ? const Expanded(
@@ -48,25 +54,24 @@ class ContributionView extends StatelessWidget {
                                                 padding:
                                                     const EdgeInsets.all(2.0),
                                                 child: Chip(
-                                                    onDeleted: () =>
-                                                        model.onDeleteChip(e),
+                                                    onDeleted: () => model
+                                                        .onDeleteChip(e, 0),
                                                     deleteIcon: const Icon(
                                                         Icons.cancel),
                                                     label: Text(e)),
                                               ))
                                           .toList(),
                                     ),
-                                    // Flexible(
-                                    //   child: TextButton(
-                                    //       style: TextButton.styleFrom(
-                                    //           backgroundColor: Colors.red),
-                                    //       onPressed: () {},
-                                    //       child: const Text('add symptom')),
-                                    // )
                                   ],
                                 )),
                           ),
                     const Divider(),
+                    HeaderChip(
+                        onTap: model.onAddToSpecific,
+                        headerText: 'Presctiptions'),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     model.addedprescriptions.isEmpty
                         ? const Expanded(
                             child: Center(
@@ -84,8 +89,8 @@ class ContributionView extends StatelessWidget {
                                                 padding:
                                                     const EdgeInsets.all(2.0),
                                                 child: Chip(
-                                                    onDeleted: () =>
-                                                        model.onDeleteChip(e),
+                                                    onDeleted: () => model
+                                                        .onDeleteChip(e, 1),
                                                     deleteIcon: const Icon(
                                                         Icons.cancel),
                                                     label: Text(e)),
@@ -95,6 +100,16 @@ class ContributionView extends StatelessWidget {
                                   ],
                                 )),
                           ),
+                    const Divider(),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    HeaderChip(
+                        onTap: model.onAddToSpecific, headerText: 'Disease'),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(child: Text(model.disease ?? '')),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
@@ -104,7 +119,7 @@ class ContributionView extends StatelessWidget {
                             child: TextButton(
                                 style: TextButton.styleFrom(
                                     backgroundColor: primaryColor),
-                                onPressed: () {},
+                                onPressed: model.isBusy?null:model.onContribute,
                                 child: model.isBusy
                                     ? Transform.scale(
                                         scale: .3,
@@ -112,7 +127,7 @@ class ContributionView extends StatelessWidget {
                                             color: Colors.white),
                                       )
                                     : const Text(
-                                        'ADD A CONTRIBUTION',
+                                        'SUBMIT',
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontWeight: FontWeight.w600,
