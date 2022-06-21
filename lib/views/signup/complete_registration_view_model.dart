@@ -3,6 +3,7 @@ import 'package:doctr/app/app.router.dart';
 import 'package:doctr/models/condition.dart';
 import 'package:doctr/models/gender.dart';
 import 'package:doctr/models/user_additional_data_model.dart';
+import 'package:doctr/models/user_type.dart';
 import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/cloud_firestore_services.dart';
@@ -18,9 +19,12 @@ class CompleteRegistrationViewModel extends FormViewModel {
   final _navigationService = locator<NavigationService>();
   final _cloudService = locator<CloudFirestoreServices>();
   final _cacheService = locator<CacheServices>();
+  final doctorController = TextEditingController(text: '');
   Gender currentGender = Gender.MALE;
+  UserType userType = UserType.user;
   Condition currentCondition = Condition.FIT;
   List<Condition> conditions = [Condition.FIT, Condition.DIABETIC];
+  List<UserType> userTypes = [UserType.user, UserType.doctor];
   DateTime? dob;
 
   void onGenderChanged(Gender? gender) {
@@ -40,6 +44,9 @@ class CompleteRegistrationViewModel extends FormViewModel {
 
   String? _isFormValid() {
     if (dob == null) return 'Please date of birth is required';
+    if (userType == UserType.doctor && doctorController.text.isEmpty) {
+      return 'Please enter your referal code as a medical doctor';
+    }
     return null;
   }
 
@@ -53,7 +60,11 @@ class CompleteRegistrationViewModel extends FormViewModel {
     setBusy(true);
     var res = await _cloudService.uploadUserAdditionalData(
         UserAdditionalDataModel(
-            dob: dob!, condition: currentCondition, gender: currentGender));
+            dob: dob!,
+            docId: userType == UserType.doctor ? doctorController.text : null,
+            condition: currentCondition,
+            gender: currentGender,
+            userType: userType));
     if (res.exception != null) {
       setBusy(false);
       return _dialogService.showDialog(
@@ -70,6 +81,12 @@ class CompleteRegistrationViewModel extends FormViewModel {
 
   void changeCondition(Condition? value) {
     currentCondition = value ?? currentCondition;
+    notifyListeners();
+  }
+
+  void changeUserType(UserType? value) {
+    userType = value ?? userType;
+    doctorController.clear();
     notifyListeners();
   }
 }

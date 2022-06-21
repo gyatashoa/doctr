@@ -20,6 +20,7 @@ class UserAdditionalDataModelAdapter
     return UserAdditionalDataModel(
       condition: fields[2] as Condition,
       dob: fields[0] as DateTime,
+      userType: fields[3] as UserType,
       gender: fields[1] as Gender,
     );
   }
@@ -27,13 +28,15 @@ class UserAdditionalDataModelAdapter
   @override
   void write(BinaryWriter writer, UserAdditionalDataModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.dob)
       ..writeByte(1)
       ..write(obj.gender)
       ..writeByte(2)
-      ..write(obj.condition);
+      ..write(obj.condition)
+      ..writeByte(3)
+      ..write(obj.userType);
   }
 
   @override

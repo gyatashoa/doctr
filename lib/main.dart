@@ -5,6 +5,7 @@ import 'package:doctr/config/stream_credentials.dart';
 import 'package:doctr/models/condition.dart';
 import 'package:doctr/models/gender.dart';
 import 'package:doctr/models/user_additional_data_model.dart';
+import 'package:doctr/models/user_type.dart';
 import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/services/cache_service.dart';
@@ -14,6 +15,7 @@ import 'package:doctr/utils/bottom_sheet_config.dart';
 import 'package:doctr/utils/snackbar_config.dart';
 import 'package:doctr/views/home/home_view.dart';
 import 'package:doctr/views/login/login_view.dart';
+import 'package:doctr/views/signup/complete_registration_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -28,6 +30,7 @@ Future<void> main() async {
   Hive.registerAdapter(UserAdditionalDataModelAdapter());
   Hive.registerAdapter(GenderAdapter());
   Hive.registerAdapter(ConditionAdapter());
+  Hive.registerAdapter(UserTypeAdapter());
   await setupLocator();
   loadSnackbarConfig();
   setupBottomSheetUi();
@@ -81,7 +84,8 @@ class MyApp extends StatelessWidget {
           );
         },
         theme: AppTheme.lightTheme,
-        home: !isLoggedIn ? const LoginView() : const HomeView(),
+        home: const CompleteRegistrationView(),
+        // home: !isLoggedIn ? const LoginView() : const HomeView(),
         onGenerateRoute: StackedRouter().onGenerateRoute,
         navigatorKey: StackedService.navigatorKey,
       ),

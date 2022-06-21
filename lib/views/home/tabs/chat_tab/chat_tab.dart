@@ -48,24 +48,6 @@ class ChatTab extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ))),
             const Expanded(child: ContactsPage())
-            // Flexible(
-            //     child: ListView.separated(
-            //         physics: const BouncingScrollPhysics(),
-            //         itemBuilder: (_, i) => ListTile(
-            //               onTap: () {},
-            //               leading: CircleAvatar(
-            //                 backgroundImage: AssetImage(chats[i].imgUrl),
-            //               ),
-            //               title: Text(
-            //                 chats[i].name,
-            //                 style: const TextStyle(color: Colors.white),
-            //               ),
-            //             ),
-            //         separatorBuilder: (_, i) => const Divider(
-            //               height: 0,
-            //               color: Colors.white,
-            //             ),
-            //         itemCount: chats.length))
           ],
         );
       },
@@ -154,69 +136,3 @@ class _ContactTile extends StatelessWidget {
     );
   }
 }
-
-// class MessagesPage extends StatefulWidget {
-//   const MessagesPage({Key? key}) : super(key: key);
-
-//   @override
-//   _MessagesPageState createState() => _MessagesPageState();
-// }
-
-// class _MessagesPageState extends State<MessagesPage> {
-//   final channelListController = ChannelListController();
-//   final AuthServices _authServices = locator<AuthServices>();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ChannelListCore(
-//       channelListController: channelListController,
-//       filter: Filter.and(
-//         [
-//           Filter.equal('type', 'messaging'),
-//           Filter.in_('members', [
-//             _authServices.currentUser!.uid,
-//           ])
-//         ],
-//       ),
-//       emptyBuilder: (context) => const Center(
-//         child: Text(
-//           'So empty.\nGo and message someone.',
-//           textAlign: TextAlign.center,
-//         ),
-//       ),
-//       errorBuilder: (context, error) => DisplayErrorMessage(
-//         error: error,
-//       ),
-//       loadingBuilder: (
-//         context,
-//       ) =>
-//           const Center(
-//         child: SizedBox(
-//           height: 100,
-//           width: 100,
-//           child: CircularProgressIndicator(),
-//         ),
-//       ),
-//       listBuilder: (context, channels) {
-//         return CustomScrollView(
-//           slivers: [
-//             const SliverToBoxAdapter(
-//                 // child: _Stories(),
-//                 ),
-//             SliverList(
-//               delegate: SliverChildBuilderDelegate(
-//                 (context, index) {
-//                   return Container();
-//                   // return _MessageTile(
-//                   //   channel: channels[index],
-//                   // );
-//                 },
-//                 childCount: channels.length,
-//               ),
-//             )
-//           ],
-//         );
-//       },
-//     );
-//   }
-// }
