@@ -1,12 +1,13 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
-import 'package:doctr/models/chat_model.dart';
+import 'package:doctr/models/user_additional_data_model.dart';
+import 'package:doctr/models/user_type.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/theme/colors.dart';
-import 'package:doctr/views/home/home_view_model.dart';
 import 'package:doctr/views/home/tabs/chat_tab/chat_tab_view_model.dart';
 import 'package:doctr/widgets/display_error_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
@@ -16,19 +17,9 @@ class ChatTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<ChatModel> chats = [
-      ChatModel(name: 'Dr Asamoah Felix', imgUrl: 'assets/images/user.png'),
-      ChatModel(name: 'Dr Asamoah Felix', imgUrl: 'assets/images/user.png'),
-      ChatModel(name: 'Dr Asamoah Felix', imgUrl: 'assets/images/user.png'),
-      ChatModel(name: 'Dr Asamoah Felix', imgUrl: 'assets/images/user.png'),
-      ChatModel(name: 'Dr Asamoah Felix', imgUrl: 'assets/images/user.png'),
-      ChatModel(name: 'Dr Asamoah Felix', imgUrl: 'assets/images/user.png'),
-      ChatModel(name: 'Dr Asamoah Felix', imgUrl: 'assets/images/user.png'),
-      ChatModel(name: 'Dr Asamoah Felix', imgUrl: 'assets/images/user.png'),
-    ];
     final client = StreamChatCore.of(context).client;
     return ViewModelBuilder<ChatTabViewModel>.reactive(
-      onModelReady: (model) => model.connectUser(client),
+      onModelReady: (model) => model.connectUser(client, context),
       builder: (context, model, child) {
         return Column(
           children: [
@@ -62,10 +53,13 @@ class ContactsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthServices _authServices = locator<AuthServices>();
+    final provider = Provider.of<UserAdditionalDataModel>(context);
     return UserListCore(
       limit: 20,
-      //Will add a filter to show only doctors
-      filter: Filter.notEqual('id', _authServices.currentUser!.uid),
+      filter: Filter.and([
+        Filter.notEqual('id', _authServices.currentUser!.uid),
+        Filter.equal('userType', provider.userType == UserType.user ? 1 : 0)
+      ]),
       emptyBuilder: (context) {
         return const Center(child: Text('There are no users'));
       },

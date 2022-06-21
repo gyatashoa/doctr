@@ -15,7 +15,6 @@ import 'package:doctr/utils/bottom_sheet_config.dart';
 import 'package:doctr/utils/snackbar_config.dart';
 import 'package:doctr/views/home/home_view.dart';
 import 'package:doctr/views/login/login_view.dart';
-import 'package:doctr/views/signup/complete_registration_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -84,8 +83,7 @@ class MyApp extends StatelessWidget {
           );
         },
         theme: AppTheme.lightTheme,
-        home: const CompleteRegistrationView(),
-        // home: !isLoggedIn ? const LoginView() : const HomeView(),
+        home: !isLoggedIn ? const LoginView() : const HomeView(),
         onGenerateRoute: StackedRouter().onGenerateRoute,
         navigatorKey: StackedService.navigatorKey,
       ),
