@@ -107,6 +107,25 @@ class CloudFirestoreServices {
     }
   }
 
+  Future addContributionToCloud(
+      List<String> symptoms, List<String> prescriptions, String disease) async {
+    var user = _authService.currentUser;
+    var ref = _instance.collection('Contributions');
+    try {
+      var data = <String, dynamic>{
+        'doctorName': user?.displayName,
+        'doctorEmail': user?.email,
+        'symptoms': symptoms,
+        'prescriptions': prescriptions,
+        'disease': disease,
+        'createdAt': FieldValue.serverTimestamp()
+      };
+      await ref.add(data);
+    } catch (e) {
+      return 'Error uploading data!!';
+    }
+  }
+
   Future<ApiResponse<List<DiagnosisResponseModel>, CloudFirestoreException>>
       loadDataToCloudDb() async {
     var uid = _authService.currentUser?.uid;

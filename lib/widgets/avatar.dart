@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class Avatar extends StatelessWidget {
@@ -46,7 +45,7 @@ class Avatar extends StatelessWidget {
     if (url != null) {
       return CircleAvatar(
         radius: radius,
-        backgroundImage: CachedNetworkImageProvider(url!),
+        backgroundImage: const AssetImage('assets/images/user.png'),
         backgroundColor: Theme.of(context).cardColor,
       );
     } else {

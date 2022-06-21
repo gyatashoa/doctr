@@ -12,6 +12,7 @@ import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/symtoms_state_service.dart';
 import 'package:doctr/theme/app_theme.dart';
 import 'package:doctr/utils/bottom_sheet_config.dart';
+import 'package:doctr/utils/dialog_config.dart';
 import 'package:doctr/utils/snackbar_config.dart';
 import 'package:doctr/views/home/home_view.dart';
 import 'package:doctr/views/login/login_view.dart';
@@ -33,6 +34,7 @@ Future<void> main() async {
   await setupLocator();
   loadSnackbarConfig();
   setupBottomSheetUi();
+  loadDialogConfig();
   final authServices = locator<AuthServices>();
   final cacheService = locator<CacheServices>();
   final symptomsStateService = locator<SymptomsStateService>();

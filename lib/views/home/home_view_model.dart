@@ -63,4 +63,8 @@ class HomeViewModel extends BaseViewModel {
         variant: SnackbarVariant.success,
         message: 'Report sent successfully!!');
   }
+
+  void onAddAContribution() {
+    _navigationService.navigateTo(Routes.contributionView);
+  }
 }

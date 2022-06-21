@@ -18,6 +18,7 @@ class CheckUserProfileView extends HookWidget {
     final dobController = useTextEditingController();
     final currentCondtionController = useTextEditingController();
     final createdAtController = useTextEditingController();
+    final userTypeController = useTextEditingController();
     var user = Provider.of<UserAdditionalDataProvider>(context).getUserAddData;
     return ViewModelBuilder<CheckUserProfileViewModel>.nonReactive(
         viewModelBuilder: () => CheckUserProfileViewModel(),
@@ -29,6 +30,7 @@ class CheckUserProfileView extends HookWidget {
           currentCondtionController.text = user.condition.name;
           createdAtController.text =
               model.user?.metadata.creationTime?.dateTimeString ?? '';
+          userTypeController.text = user.userType.name.toUpperCase();
           return Scaffold(
               backgroundColor: primaryColor,
               appBar: AppBar(
@@ -116,6 +118,13 @@ class CheckUserProfileView extends HookWidget {
                         decoration: const InputDecoration(
                             labelText: 'Account Creation Date'),
                         controller: createdAtController,
+                        enabled: false,
+                      ),
+                      const SizedBox(height: 5),
+                      TextField(
+                        decoration:
+                            const InputDecoration(labelText: 'Registered as'),
+                        controller: userTypeController,
                         enabled: false,
                       ),
                     ]),

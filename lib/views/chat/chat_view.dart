@@ -8,9 +8,8 @@ import 'package:doctr/utils/helpers.dart';
 import 'package:doctr/widgets/avatar.dart';
 import 'package:doctr/widgets/display_error_widget.dart';
 import 'package:doctr/widgets/glowing_action_button.dart';
-import 'package:doctr/widgets/icon_buttons.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
@@ -106,6 +105,7 @@ class _MessageList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView.separated(
+        physics: const BouncingScrollPhysics(),
         itemCount: messages.length + 1,
         reverse: true,
         separatorBuilder: (context, index) {
@@ -170,7 +170,7 @@ class _MessageTile extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).cardColor,
+                color: primaryColor.withOpacity(.8),
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(_borderRadius),
                   topRight: Radius.circular(_borderRadius),
@@ -180,7 +180,10 @@ class _MessageTile extends StatelessWidget {
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12.0, vertical: 20),
-                child: Text(message.text ?? ''),
+                child: Text(
+                  message.text ?? '',
+                  style: GoogleFonts.ptSans(color: Colors.white),
+                ),
               ),
             ),
             Padding(
@@ -223,7 +226,7 @@ class _MessageOwnTile extends StatelessWidget {
           children: [
             Container(
               decoration: const BoxDecoration(
-                color: AppColors.secondary,
+                color: primaryColor,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(_borderRadius),
                   bottomRight: Radius.circular(_borderRadius),
@@ -306,9 +309,15 @@ class __DateLableState extends State<_DateLable> {
         padding: const EdgeInsets.symmetric(vertical: 32.0),
         child: Container(
           decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(12),
-          ),
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: const [
+                BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 2,
+                    offset: Offset(0, 1),
+                    spreadRadius: 2)
+              ]),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12),
             child: Text(
@@ -316,7 +325,7 @@ class __DateLableState extends State<_DateLable> {
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textFaded,
+                color: Colors.white,
               ),
             ),
           ),
@@ -337,8 +346,8 @@ class _AppBarTitle extends StatelessWidget {
     // final _authServices = locator<AuthServices>();
     return Row(
       children: [
-        Avatar.small(
-          url: Helpers.getChannelImage(channel, context.currentUser!),
+        const Avatar.small(
+          url: 'assets/images/user.png',
         ),
         const SizedBox(
           width: 16,

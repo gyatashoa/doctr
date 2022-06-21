@@ -1,7 +1,7 @@
 class NewsModel {
-  final String title;
-  final String imageUrl;
-  final String url;
+  final String? title;
+  final String? imageUrl;
+  final String? url;
   NewsModel({
     this.url = '',
     required this.title,

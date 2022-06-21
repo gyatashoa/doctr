@@ -7,6 +7,7 @@ import 'package:doctr/services/symtoms_state_service.dart';
 import 'package:doctr/views/chat/chat_view.dart';
 import 'package:doctr/views/check_diagnosis_history/check_diagnosis_history_view.dart';
 import 'package:doctr/views/check_user_profile/check_user_profile_view.dart';
+import 'package:doctr/views/contribution/contribution_view.dart';
 import 'package:doctr/views/diagnosis_report/diagnosis_report_view.dart';
 import 'package:doctr/views/home/home_view.dart';
 import 'package:doctr/views/login/login_view.dart';
@@ -27,7 +28,8 @@ import 'package:stacked_services/stacked_services.dart';
   MaterialRoute(page: CheckDiagnosisHistoryView),
   MaterialRoute(page: CompleteRegistrationView),
   MaterialRoute(page: DiagnosisReportView),
-  MaterialRoute(page: ChatView)
+  MaterialRoute(page: ChatView),
+  MaterialRoute(page: ContributionView)
 ], dependencies: [
   LazySingleton(classType: NavigationService),
   LazySingleton(classType: AuthServices),

@@ -6,7 +6,6 @@
 
 // ignore_for_file: public_member_api_docs
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -16,6 +15,7 @@ import '../models/diagnosis_response_model.dart';
 import '../views/chat/chat_view.dart';
 import '../views/check_diagnosis_history/check_diagnosis_history_view.dart';
 import '../views/check_user_profile/check_user_profile_view.dart';
+import '../views/contribution/contribution_view.dart';
 import '../views/diagnosis_report/diagnosis_report_view.dart';
 import '../views/home/home_view.dart';
 import '../views/login/login_view.dart';
@@ -36,6 +36,7 @@ class Routes {
   static const String completeRegistrationView = '/complete-registration-view';
   static const String diagnosisReportView = '/diagnosis-report-view';
   static const String chatView = '/chat-view';
+  static const String contributionView = '/contribution-view';
   static const all = <String>{
     loginView,
     signUpView,
@@ -47,6 +48,7 @@ class Routes {
     completeRegistrationView,
     diagnosisReportView,
     chatView,
+    contributionView,
   };
 }
 
@@ -64,6 +66,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.completeRegistrationView, page: CompleteRegistrationView),
     RouteDef(Routes.diagnosisReportView, page: DiagnosisReportView),
     RouteDef(Routes.chatView, page: ChatView),
+    RouteDef(Routes.contributionView, page: ContributionView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -133,6 +136,12 @@ class StackedRouter extends RouterBase {
           key: args.key,
           channel: args.channel,
         ),
+        settings: data,
+      );
+    },
+    ContributionView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const ContributionView(),
         settings: data,
       );
     },

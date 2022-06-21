@@ -43,7 +43,7 @@ class UserAdditionalDataModel {
         'dob': Timestamp.fromDate(dob),
         'gender': gender.index,
         'condition': condition.index,
-        'userType': userType,
+        'userType': userType.index,
         'docId': docId
       };
 }

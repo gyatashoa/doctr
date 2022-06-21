@@ -1,12 +1,13 @@
-import 'package:doctr/models/news_model.dart';
 import 'package:doctr/views/home/tabs/news_section/news_section_view_model.dart';
 import 'package:doctr/widgets/new_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class NewsSection extends StatelessWidget {
-  const NewsSection({Key? key, required this.news}) : super(key: key);
-  final List<NewsModel> news;
+  const NewsSection({
+    Key? key,
+  }) : super(key: key);
+  // final List<NewsModel> news;
 
   @override
   Widget build(BuildContext context) {
@@ -17,15 +18,8 @@ class NewsSection extends StatelessWidget {
         if (model.isBusy) {
           return const CircularProgressIndicator();
         }
-        if (model.hasError) {
-          return Column(
-            children: [
-              const Text('Error fetching data'),
-              TextButton(onPressed: model.onRetry, child: const Text('Retry'))
-            ],
-          );
-        }
-        if (model.dataReady) {
+
+        if (model.data != null) {
           return SizedBox(
             height: devSize.height * .3,
             width: double.infinity,
@@ -40,6 +34,14 @@ class NewsSection extends StatelessWidget {
                         news: model.data![i],
                       ),
                     )),
+          );
+        }
+        if (model.hasError) {
+          return Column(
+            children: [
+              const Text('Error fetching data'),
+              TextButton(onPressed: model.onRetry, child: const Text('Retry'))
+            ],
           );
         }
         return Container();

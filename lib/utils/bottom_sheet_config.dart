@@ -18,7 +18,19 @@ void setupBottomSheetUi() {
           request: sheetRequest,
           completer: completer,
           controller: TextEditingController(text: ''),
-        )
+        ),
+    BottomSheetType.floatingWithTextFieldSync:
+        (context, sheetRequest, completer) =>
+            _FloatingBoxBottomWithTextFieldSync(
+              request: sheetRequest,
+              completer: completer,
+              controller: TextEditingController(text: ''),
+            ),
+    BottomSheetType.choice: (context, sheetRequest, completer) =>
+        _ChoiceBottomSheet(
+          request: sheetRequest,
+          completer: completer,
+        ),
   };
 
   bottomSheetService.setCustomSheetBuilders(builders);
@@ -26,6 +38,8 @@ void setupBottomSheetUi() {
 
 enum BottomSheetType {
   floatingWithTextField,
+  choice,
+  floatingWithTextFieldSync
 }
 
 class _FloatingBoxBottomSheet extends StatefulWidget {
@@ -107,6 +121,87 @@ class _FloatingBoxBottomSheetState extends State<_FloatingBoxBottomSheet> {
                       ))
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _FloatingBoxBottomWithTextFieldSync extends StatelessWidget {
+  final TextEditingController controller;
+  final SheetRequest? request;
+  final Function(SheetResponse)? completer;
+  const _FloatingBoxBottomWithTextFieldSync(
+      {Key? key, this.completer, this.request, required this.controller})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final devSize = MediaQuery.of(context).size;
+    return Container(
+      // height: devSize.height * .2,
+      margin: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: SingleChildScrollView(
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                // maxLines: 4,
+                // minLines: 1,
+                controller: controller,
+                decoration:
+                    InputDecoration(hintText: 'Enter ${request?.data} here...'),
+              ),
+            ),
+            TextButton(
+                style: TextButton.styleFrom(),
+                onPressed: () {
+                  if (completer != null) {
+                    completer!(SheetResponse(data: controller.text));
+                  }
+                },
+                child: const Text('ADD'))
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ChoiceBottomSheet extends StatelessWidget {
+  final SheetRequest? request;
+  final Function(SheetResponse)? completer;
+
+  const _ChoiceBottomSheet(
+      {Key? key, required this.request, required this.completer})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextButton(
+              onPressed: () {
+                completer!(SheetResponse(data: 'Symptoms'));
+              },
+              child: const Text('Symptoms')),
+          TextButton(
+              onPressed: () {
+                completer!(SheetResponse(data: 'Prescriptions'));
+              },
+              child: const Text('Prescriptions')),
+          TextButton(
+              onPressed: () {
+                completer!(SheetResponse(data: 'Disease'));
+              },
+              child: const Text('Disease')),
+        ],
       ),
     );
   }
