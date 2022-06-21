@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:doctr/models/news_model.dart';
 import 'package:flutter/material.dart';
 
@@ -24,11 +25,20 @@ class NewsTile extends StatelessWidget {
         ),
         child: Stack(children: [
           Container(
+            // ignore: unnecessary_null_comparison
+            // child: CachedNetworkImage(
+            //   fit: BoxFit.cover,
+            //   errorWidget: (context, url, error) => Text(error.toString()),
+            //   imageUrl: (news.imageUrl == null) || (news.imageUrl == '')
+            //       ? 'https://icon-library.com/images/image-icon/image-icon-10.jpg'
+            //       : news.imageUrl,
+            // ),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                    image: AssetImage(
-                      news.imageUrl,
+                    image: CachedNetworkImageProvider(
+                      news.imageUrl ??
+                          'https://icon-library.com/images/image-icon/image-icon-10.jpg',
                     ),
                     fit: BoxFit.cover)),
           ),

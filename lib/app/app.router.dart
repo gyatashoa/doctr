@@ -6,11 +6,14 @@
 
 // ignore_for_file: public_member_api_docs
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
+import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 import '../models/diagnosis_response_model.dart';
+import '../views/chat/chat_view.dart';
 import '../views/check_diagnosis_history/check_diagnosis_history_view.dart';
 import '../views/check_user_profile/check_user_profile_view.dart';
 import '../views/diagnosis_report/diagnosis_report_view.dart';
@@ -32,6 +35,7 @@ class Routes {
       '/check-diagnosis-history-view';
   static const String completeRegistrationView = '/complete-registration-view';
   static const String diagnosisReportView = '/diagnosis-report-view';
+  static const String chatView = '/chat-view';
   static const all = <String>{
     loginView,
     signUpView,
@@ -42,6 +46,7 @@ class Routes {
     checkDiagnosisHistoryView,
     completeRegistrationView,
     diagnosisReportView,
+    chatView,
   };
 }
 
@@ -58,6 +63,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.checkDiagnosisHistoryView, page: CheckDiagnosisHistoryView),
     RouteDef(Routes.completeRegistrationView, page: CompleteRegistrationView),
     RouteDef(Routes.diagnosisReportView, page: DiagnosisReportView),
+    RouteDef(Routes.chatView, page: ChatView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -120,6 +126,16 @@ class StackedRouter extends RouterBase {
         settings: data,
       );
     },
+    ChatView: (data) {
+      var args = data.getArgs<ChatViewArguments>(nullOk: false);
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ChatView(
+          key: args.key,
+          channel: args.channel,
+        ),
+        settings: data,
+      );
+    },
   };
 }
 
@@ -133,4 +149,11 @@ class DiagnosisReportViewArguments {
   final DiagnosisResponseModel diagnosisResponseModel;
   DiagnosisReportViewArguments(
       {this.key, required this.diagnosisResponseModel});
+}
+
+/// ChatView arguments holder class
+class ChatViewArguments {
+  final Key? key;
+  final Channel channel;
+  ChatViewArguments({this.key, required this.channel});
 }
