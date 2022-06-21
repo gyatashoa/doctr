@@ -1,6 +1,7 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
 import 'package:doctr/config/app_properties.dart';
+import 'package:doctr/config/stream_credentials.dart';
 import 'package:doctr/models/condition.dart';
 import 'package:doctr/models/gender.dart';
 import 'package:doctr/models/user_additional_data_model.dart';
@@ -18,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,8 +41,10 @@ Future<void> main() async {
     isLoggedIn = true;
     userAdditionalDataModel = await cacheService.getUserAddData();
   }
+  final client = StreamChatClient(streamKey);
 
   runApp(MyApp(
+    client: client,
     isLoggedIn: isLoggedIn,
     userAdditionalDataModel: userAdditionalDataModel,
   ));
@@ -48,9 +52,11 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
+  final StreamChatClient client;
   final UserAdditionalDataModel? userAdditionalDataModel;
   const MyApp(
       {Key? key,
+      required this.client,
       required this.isLoggedIn,
       required this.userAdditionalDataModel})
       : super(key: key);
@@ -64,6 +70,16 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         title: appName,
+        builder: (context, child) {
+          return StreamChatCore(
+            client: client,
+            child: ChannelsBloc(
+              child: UsersBloc(
+                child: child!,
+              ),
+            ),
+          );
+        },
         theme: AppTheme.lightTheme,
         home: !isLoggedIn ? const LoginView() : const HomeView(),
         onGenerateRoute: StackedRouter().onGenerateRoute,
