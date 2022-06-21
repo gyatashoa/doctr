@@ -13,15 +13,6 @@ class MakeADiagnosisView extends StatelessWidget {
   Widget build(BuildContext context) {
     var statusViewHeight = MediaQuery.of(context).viewPadding.top;
     final devSize = MediaQuery.of(context).size;
-    var selected = <String>[
-      'Headache',
-      'Vomiting',
-      'nabdshbsdfhbsdjfhbhj',
-      'sdmnkjsbdfjhbsjdfhjhs'
-          'Stomache',
-      'shdfjshfdshsf'
-    ];
-
     return ViewModelBuilder<MakeADiagnosisViewModel>.reactive(
       onModelReady: (model) => SchedulerBinding.instance!.addPostFrameCallback(
         (_) => model.onload(),

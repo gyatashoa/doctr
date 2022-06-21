@@ -37,7 +37,7 @@ class ApiServices {
       } else if (response.statusCode! > 400) {
         throw Exception('Error while fetching data!!');
       }
-      return ApiResponse.data(data: jsonDecode(response.data));
+      return ApiResponse.data(data: response.data);
     } on UrlNotFoundException catch (e) {
       return ApiResponse.error(exception: e);
     } on Exception catch (e) {

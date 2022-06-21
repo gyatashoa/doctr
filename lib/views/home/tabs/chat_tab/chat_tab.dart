@@ -2,6 +2,7 @@ import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
 import 'package:doctr/models/user_additional_data_model.dart';
 import 'package:doctr/models/user_type.dart';
+import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/tabs/chat_tab/chat_tab_view_model.dart';
@@ -53,12 +54,13 @@ class ContactsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthServices _authServices = locator<AuthServices>();
-    final provider = Provider.of<UserAdditionalDataModel>(context);
+    final provider = Provider.of<UserAdditionalDataProvider>(context);
     return UserListCore(
       limit: 20,
       filter: Filter.and([
         Filter.notEqual('id', _authServices.currentUser!.uid),
-        Filter.equal('userType', provider.userType == UserType.user ? 1 : 0)
+        Filter.equal('userType',
+            provider.getUserAddData?.userType == UserType.user ? 1 : 0)
       ]),
       emptyBuilder: (context) {
         return const Center(child: Text('There are no users'));

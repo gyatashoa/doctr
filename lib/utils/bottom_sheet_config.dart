@@ -18,15 +18,20 @@ void setupBottomSheetUi() {
           request: sheetRequest,
           completer: completer,
           controller: TextEditingController(text: ''),
-        )
+        ),
+    BottomSheetType.floatingWithTextFieldSync:
+        (context, sheetRequest, completer) =>
+            _FloatingBoxBottomWithTextFieldSync(
+              request: sheetRequest,
+              completer: completer,
+              controller: TextEditingController(text: ''),
+            ),
   };
 
   bottomSheetService.setCustomSheetBuilders(builders);
 }
 
-enum BottomSheetType {
-  floatingWithTextField,
-}
+enum BottomSheetType { floatingWithTextField, floatingWithTextFieldSync }
 
 class _FloatingBoxBottomSheet extends StatefulWidget {
   final SheetRequest? request;
@@ -105,6 +110,53 @@ class _FloatingBoxBottomSheetState extends State<_FloatingBoxBottomSheet> {
                         Icons.send,
                         color: Colors.white,
                       ))
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _FloatingBoxBottomWithTextFieldSync extends StatelessWidget {
+  final TextEditingController controller;
+  final SheetRequest<String>? request;
+  final Function(SheetResponse)? completer;
+  const _FloatingBoxBottomWithTextFieldSync(
+      {Key? key, this.completer, this.request, required this.controller})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final devSize = MediaQuery.of(context).size;
+    return Container(
+      // height: devSize.height * .2,
+      margin: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(25),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: SingleChildScrollView(
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                // maxLines: 4,
+                // minLines: 1,
+                controller: controller,
+                decoration:
+                    InputDecoration(hintText: 'Enter ${request?.data} here...'),
+              ),
+            ),
+            TextButton(
+                style: TextButton.styleFrom(
+                    shape: const CircleBorder(), backgroundColor: primaryColor),
+                onPressed: () {
+                  if (completer != null) {
+                    completer!(SheetResponse(data: controller.text));
+                  }
+                },
+                child: const Text('ADD'))
           ],
         ),
       ),

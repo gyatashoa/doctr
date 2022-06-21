@@ -1,8 +1,11 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
+import 'package:doctr/models/user_type.dart';
+import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,11 +14,21 @@ class DiagnosisTab extends ViewModelWidget<HomeViewModel> {
 
   @override
   Widget build(BuildContext context, HomeViewModel model) {
+    var provider = Provider.of<UserAdditionalDataProvider>(context);
+
     List<DiagnosisTiles> tiles = [
       DiagnosisTiles.MAKE_A_DIAGNOSIS,
       DiagnosisTiles.CHECK_DIAGNOSIS_HISTORY,
       DiagnosisTiles.REPORT_A_PROBLEM
     ];
+    if (provider.getUserAddData?.userType == UserType.doctor) {
+      tiles = [
+        DiagnosisTiles.MAKE_A_DIAGNOSIS,
+        DiagnosisTiles.CHECK_DIAGNOSIS_HISTORY,
+        DiagnosisTiles.REPORT_A_PROBLEM,
+        DiagnosisTiles.ADD_A_CONTRIBUTION
+      ];
+    }
     return Column(
       children: [
         Container(
@@ -56,7 +69,8 @@ class DiagnosisTab extends ViewModelWidget<HomeViewModel> {
 enum DiagnosisTiles {
   MAKE_A_DIAGNOSIS,
   CHECK_DIAGNOSIS_HISTORY,
-  REPORT_A_PROBLEM
+  REPORT_A_PROBLEM,
+  ADD_A_CONTRIBUTION
 }
 
 extension on DiagnosisTiles {
@@ -73,6 +87,9 @@ extension on DiagnosisTiles {
         break;
       case DiagnosisTiles.REPORT_A_PROBLEM:
         model.onReportAProblem();
+        break;
+      case DiagnosisTiles.ADD_A_CONTRIBUTION:
+        model.onAddAContribution();
         break;
     }
   }

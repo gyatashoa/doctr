@@ -13,7 +13,6 @@ class SettingsTab extends ViewModelWidget<HomeViewModel> {
     final List<SettingsTiles> tiles = [
       SettingsTiles.CHECK_USER_PROFILE,
       SettingsTiles.ABOUT_THIS_APP,
-      SettingsTiles.TERMS_AND_CONDITIONS,
       SettingsTiles.LOGOUT,
     ];
     return Column(
@@ -56,7 +55,7 @@ class SettingsTab extends ViewModelWidget<HomeViewModel> {
 enum SettingsTiles {
   CHECK_USER_PROFILE,
   ABOUT_THIS_APP,
-  TERMS_AND_CONDITIONS,
+  // TERMS_AND_CONDITIONS,
   LOGOUT
 }
 
@@ -70,9 +69,9 @@ extension on SettingsTiles {
         break;
       case SettingsTiles.ABOUT_THIS_APP:
         viewModel.aboutThisApp(context);
-        break;
-      case SettingsTiles.TERMS_AND_CONDITIONS:
-        viewModel.termsAndCondition();
+        // break;
+        // case SettingsTiles.TERMS_AND_CONDITIONS:
+        //   viewModel.termsAndCondition();
         break;
       case SettingsTiles.LOGOUT:
         viewModel.logout(context);
