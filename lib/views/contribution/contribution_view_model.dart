@@ -1,4 +1,5 @@
 import 'package:doctr/app/app.locator.dart';
+import 'package:doctr/services/cloud_firestore_services.dart';
 import 'package:doctr/utils/bottom_sheet_config.dart';
 import 'package:doctr/utils/snackbar_config.dart';
 import 'package:stacked/stacked.dart';
@@ -7,6 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 class ContributionViewModel extends BaseViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _snackBarService = locator<SnackbarService>();
+  final _cloudFirestore = locator<CloudFirestoreServices>();
 
   Set<String> _symptoms = {};
 
@@ -31,6 +33,21 @@ class ContributionViewModel extends BaseViewModel {
       return _snackBarService.showCustomSnackBar(
           variant: SnackbarVariant.error, message: msg);
     }
+    setBusy(true);
+    var res = await _cloudFirestore.addContributionToCloud(
+        addedSymptoms, addedSymptoms, disease!);
+    setBusy(false);
+    if (res is String) {
+      return _snackBarService.showCustomSnackBar(
+          variant: SnackbarVariant.error, message: res);
+    }
+    _symptoms = {};
+    _prescriptions = {};
+    disease = null;
+    notifyListeners();
+    return _snackBarService.showCustomSnackBar(
+        variant: SnackbarVariant.success,
+        message: 'Contribution added successfully');
   }
 
   void onDeleteChip(String e, int type) {
@@ -46,13 +63,13 @@ class ContributionViewModel extends BaseViewModel {
     SheetResponse? res = await _bottomSheetService.showCustomSheet(
         data: type, variant: BottomSheetType.floatingWithTextFieldSync);
     if (res != null) {
-      onUpdate(res.data);
+      onUpdate(res.data, type);
     }
   }
 
-  void onUpdate(String? data) {
+  void onUpdate(String? data, String type) {
     if (data != null && data.isNotEmpty) {
-      switch (data) {
+      switch (type) {
         case 'Symptoms':
           _symptoms.add(data);
           break;
@@ -75,7 +92,7 @@ class ContributionViewModel extends BaseViewModel {
       SheetResponse? res = await _bottomSheetService.showCustomSheet(
           data: data.data, variant: BottomSheetType.floatingWithTextFieldSync);
       if (res != null) {
-        onUpdate(res.data);
+        onUpdate(res.data, data.data);
       }
     }
   }

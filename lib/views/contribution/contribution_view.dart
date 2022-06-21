@@ -68,7 +68,7 @@ class ContributionView extends StatelessWidget {
                     const Divider(),
                     HeaderChip(
                         onTap: model.onAddToSpecific,
-                        headerText: 'Presctiptions'),
+                        headerText: 'Prescriptions'),
                     const SizedBox(
                       height: 10,
                     ),
@@ -119,7 +119,8 @@ class ContributionView extends StatelessWidget {
                             child: TextButton(
                                 style: TextButton.styleFrom(
                                     backgroundColor: primaryColor),
-                                onPressed: model.isBusy?null:model.onContribute,
+                                onPressed:
+                                    model.isBusy ? null : model.onContribute,
                                 child: model.isBusy
                                     ? Transform.scale(
                                         scale: .3,
