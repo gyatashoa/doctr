@@ -4,6 +4,7 @@ import 'package:doctr/services/cache_service.dart';
 import 'package:doctr/services/cloud_firestore_services.dart';
 import 'package:doctr/services/diagnosis_response_state_service.dart';
 import 'package:doctr/services/symtoms_state_service.dart';
+import 'package:doctr/views/chat/chat_view.dart';
 import 'package:doctr/views/check_diagnosis_history/check_diagnosis_history_view.dart';
 import 'package:doctr/views/check_user_profile/check_user_profile_view.dart';
 import 'package:doctr/views/diagnosis_report/diagnosis_report_view.dart';
@@ -25,7 +26,8 @@ import 'package:stacked_services/stacked_services.dart';
   MaterialRoute(page: TermsAndConditions),
   MaterialRoute(page: CheckDiagnosisHistoryView),
   MaterialRoute(page: CompleteRegistrationView),
-  MaterialRoute(page: DiagnosisReportView)
+  MaterialRoute(page: DiagnosisReportView),
+  MaterialRoute(page: ChatView)
 ], dependencies: [
   LazySingleton(classType: NavigationService),
   LazySingleton(classType: AuthServices),
