@@ -4,6 +4,7 @@ import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class SettingsTab extends ViewModelWidget<HomeViewModel> {
   const SettingsTab({Key? key}) : super(key: key, reactive: false);
@@ -74,7 +75,8 @@ extension on SettingsTiles {
         //   viewModel.termsAndCondition();
         break;
       case SettingsTiles.LOGOUT:
-        viewModel.logout(context);
+        final client = StreamChatCore.of(context).client;
+        viewModel.logout(client, context);
         break;
     }
   }

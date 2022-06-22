@@ -40,7 +40,7 @@ class ChatTab extends StatelessWidget {
                   'CHAT',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ))),
-            const Expanded(child: ContactsPage())
+            Expanded(child: ContactsPage())
           ],
         );
       },
@@ -50,16 +50,16 @@ class ChatTab extends StatelessWidget {
 }
 
 class ContactsPage extends StatelessWidget {
-  const ContactsPage({Key? key}) : super(key: key);
+  ContactsPage({Key? key}) : super(key: key);
+  AuthServices _authServices = locator<AuthServices>();
 
   @override
   Widget build(BuildContext context) {
-    final AuthServices _authServices = locator<AuthServices>();
     final provider = Provider.of<UserAdditionalDataProvider>(context);
     return UserListCore(
       limit: 20,
       filter: Filter.and([
-        Filter.notEqual('id', _authServices.currentUser!.uid),
+        Filter.notEqual('id', _authServices.currentUser?.uid ?? ''),
         Filter.equal('userType',
             provider.getUserAddData?.userType == UserType.user ? 1 : 0)
       ]),

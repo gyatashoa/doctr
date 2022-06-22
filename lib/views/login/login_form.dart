@@ -81,16 +81,19 @@ class LoginForm extends HookViewModelWidget<LoginViewModel> {
             ],
           ),
         ),
-        const Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
-              child: Text(
-                'Forgot Password?',
-                style: TextStyle(
-                    fontWeight: FontWeight.w600, color: Color(0xFF2D00CE)),
-              ),
-            )),
+        InkWell(
+          onTap: viewModel.navigateToForgotPassword,
+          child: const Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  'Forgot Password?',
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: Color(0xFF2D00CE)),
+                ),
+              )),
+        ),
         Container(
             padding: const EdgeInsets.all(5),
             width: double.infinity,
