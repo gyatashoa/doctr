@@ -19,7 +19,7 @@ class EmojiButton extends StatelessWidget {
             width: 60,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Image.asset('assets/icons/img.png'),
+              child: Image.asset(emoji),
             ),
             decoration: BoxDecoration(
               color: const Color(0xff2D84C8),
