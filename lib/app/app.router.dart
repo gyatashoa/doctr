@@ -134,6 +134,7 @@ class StackedRouter extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => ChatView(
           key: args.key,
+          otherMemberGender: args.otherMemberGender,
           channel: args.channel,
         ),
         settings: data,
@@ -163,6 +164,8 @@ class DiagnosisReportViewArguments {
 /// ChatView arguments holder class
 class ChatViewArguments {
   final Key? key;
+  final int otherMemberGender;
   final Channel channel;
-  ChatViewArguments({this.key, required this.channel});
+  ChatViewArguments(
+      {this.key, required this.otherMemberGender, required this.channel});
 }

@@ -1,3 +1,4 @@
+import 'package:doctr/models/gender.dart';
 import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/check_user_profile/check_user_profile_view_model.dart';
@@ -64,7 +65,9 @@ class CheckUserProfileView extends HookWidget {
                         // height: 50,
                         // width: 50,
                         child: Image.asset(
-                          'assets/images/user.png',
+                          user.gender == Gender.MALE
+                              ? 'assets/images/user.png'
+                              : 'assets/images/user1.png',
                           height: devSize.height * .25,
                         ),
                         decoration: BoxDecoration(

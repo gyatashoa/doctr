@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:doctr/app/app.locator.dart';
+import 'package:doctr/models/gender.dart';
 import 'package:doctr/services/auth_services.dart';
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/theme/theme.dart';
@@ -15,20 +16,26 @@ import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class ChatView extends StatelessWidget {
   final Channel channel;
-  const ChatView({Key? key, required this.channel}) : super(key: key);
+  final int otherMemberGender;
+  const ChatView(
+      {Key? key, required this.otherMemberGender, required this.channel})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StreamChannel(
       channel: channel,
-      child: ChatView1(channel: channel),
+      child: ChatView1(otherMemberGender: otherMemberGender, channel: channel),
     );
   }
 }
 
 class ChatView1 extends StatefulWidget {
   final Channel channel;
-  const ChatView1({Key? key, required this.channel}) : super(key: key);
+  final int otherMemberGender;
+  const ChatView1(
+      {Key? key, required this.otherMemberGender, required this.channel})
+      : super(key: key);
 
   @override
   _ChatViewState createState() => _ChatViewState();
@@ -67,7 +74,7 @@ class _ChatViewState extends State<ChatView1> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: primaryColor,
-          title: const _AppBarTitle(),
+          title: _AppBarTitle(otherMemberGender: widget.otherMemberGender),
         ),
         body: Column(
           children: [
@@ -336,9 +343,9 @@ class __DateLableState extends State<_DateLable> {
 }
 
 class _AppBarTitle extends StatelessWidget {
-  const _AppBarTitle({
-    Key? key,
-  }) : super(key: key);
+  final int otherMemberGender;
+  const _AppBarTitle({Key? key, required this.otherMemberGender})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -346,8 +353,10 @@ class _AppBarTitle extends StatelessWidget {
     // final _authServices = locator<AuthServices>();
     return Row(
       children: [
-        const Avatar.small(
-          url: 'assets/images/user.png',
+        Avatar.small(
+          url: otherMemberGender == Gender.MALE.index
+              ? 'assets/images/user.png'
+              : 'assets/images/user1.png',
         ),
         const SizedBox(
           width: 16,

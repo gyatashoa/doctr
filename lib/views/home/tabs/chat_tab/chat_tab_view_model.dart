@@ -23,7 +23,8 @@ class ChatTabViewModel extends BaseViewModel {
           id: user!.uid,
           extraData: {
             'name': user.displayName,
-            'userType': provider.getUserAddData?.userType.index
+            'userType': provider.getUserAddData?.userType.index,
+            'gender': provider.getUserAddData?.gender.index
           },
         ),
         client.devToken(user.uid).rawValue,
