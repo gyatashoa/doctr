@@ -1,6 +1,7 @@
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
 import 'package:doctr/views/home/tabs/tabs.dart';
+import 'package:doctr/widgets/fade_index_stack_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -33,10 +34,10 @@ class HomeView extends ViewModelBuilderWidget<HomeViewModel> {
           child: SizedBox(
               height: devSize.height,
               width: devSize.width,
-              child: IndexedStack(
-                  sizing: StackFit.expand,
-                  index: viewModel.index,
-                  children: tabView)),
+              child: FadeIndexedStack(
+                children: tabView,
+                index: viewModel.index,
+              )),
         ),
         backgroundColor: primaryColor,
         bottomNavigationBar: ClipRRect(

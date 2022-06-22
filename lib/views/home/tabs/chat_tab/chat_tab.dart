@@ -1,5 +1,6 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
+import 'package:doctr/models/gender.dart';
 import 'package:doctr/models/user_additional_data_model.dart';
 import 'package:doctr/models/user_type.dart';
 import 'package:doctr/providers/user_additional_data_provider.dart';
@@ -39,7 +40,7 @@ class ChatTab extends StatelessWidget {
                   'CHAT',
                   style: TextStyle(color: Colors.white, fontSize: 20),
                 ))),
-            const Expanded(child: ContactsPage())
+            Expanded(child: ContactsPage())
           ],
         );
       },
@@ -49,16 +50,16 @@ class ChatTab extends StatelessWidget {
 }
 
 class ContactsPage extends StatelessWidget {
-  const ContactsPage({Key? key}) : super(key: key);
+  ContactsPage({Key? key}) : super(key: key);
+  AuthServices _authServices = locator<AuthServices>();
 
   @override
   Widget build(BuildContext context) {
-    final AuthServices _authServices = locator<AuthServices>();
     final provider = Provider.of<UserAdditionalDataProvider>(context);
     return UserListCore(
       limit: 20,
       filter: Filter.and([
-        Filter.notEqual('id', _authServices.currentUser!.uid),
+        Filter.notEqual('id', _authServices.currentUser?.uid ?? ''),
         Filter.equal('userType',
             provider.getUserAddData?.userType == UserType.user ? 1 : 0)
       ]),
@@ -101,7 +102,8 @@ class _ContactTile extends StatelessWidget {
 
   final User user;
 
-  Future<void> createChannel(BuildContext context) async {
+  Future<void> createChannel(
+      BuildContext context, int otherMemberGender) async {
     final core = StreamChatCore.of(context);
     final _authService = locator<AuthServices>();
     final _navigationService = locator<NavigationService>();
@@ -113,17 +115,21 @@ class _ContactTile extends StatelessWidget {
     });
     await channel.watch();
     _navigationService.navigateTo(Routes.chatView,
-        arguments: ChatViewArguments(channel: channel));
+        arguments: ChatViewArguments(
+            channel: channel, otherMemberGender: otherMemberGender));
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        createChannel(context);
+        createChannel(context, user.extraData['gender'] as int);
       },
-      leading: const CircleAvatar(
-        backgroundImage: AssetImage('assets/images/user.png'),
+      leading: CircleAvatar(
+        backgroundImage: AssetImage(
+            user.extraData['gender'] == Gender.MALE.index
+                ? 'assets/images/user.png'
+                : 'assets/images/user1.png'),
       ),
       title: Text(
         user.name,

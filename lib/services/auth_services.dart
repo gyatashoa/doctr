@@ -22,6 +22,16 @@ class AuthServices {
     }
   }
 
+  Future forgotPassword({required String email}) async {
+    try {
+      await _instance.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      return e.message;
+    } on Exception {
+      return 'Error while logging in';
+    }
+  }
+
   Future loginWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();

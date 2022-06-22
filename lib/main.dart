@@ -14,17 +14,20 @@ import 'package:doctr/theme/app_theme.dart';
 import 'package:doctr/utils/bottom_sheet_config.dart';
 import 'package:doctr/utils/dialog_config.dart';
 import 'package:doctr/utils/snackbar_config.dart';
+import 'package:doctr/views/forgot_password/forgot_password_view.dart';
 import 'package:doctr/views/home/home_view.dart';
 import 'package:doctr/views/login/login_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  var widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
   await Hive.initFlutter();
   Hive.registerAdapter(UserAdditionalDataModelAdapter());
@@ -46,12 +49,12 @@ Future<void> main() async {
     userAdditionalDataModel = await cacheService.getUserAddData();
   }
   final client = StreamChatClient(streamKey);
-
   runApp(MyApp(
     client: client,
     isLoggedIn: isLoggedIn,
     userAdditionalDataModel: userAdditionalDataModel,
   ));
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {

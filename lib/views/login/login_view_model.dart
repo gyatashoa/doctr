@@ -86,4 +86,8 @@ class LoginViewModel extends FormViewModel {
   void navigateToSignUp() {
     _navigationServices.navigateTo(Routes.signUpView);
   }
+
+  void navigateToForgotPassword() {
+    _navigationServices.navigateTo(Routes.forgotPasswordView);
+  }
 }

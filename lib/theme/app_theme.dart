@@ -1,3 +1,4 @@
+import 'package:doctr/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,6 +8,7 @@ class AppTheme {
       fontWeight: FontWeight.w500,
     );
     return ThemeData(
+        primaryColor: primaryColor,
         primaryTextTheme: TextTheme(
             bodySmall: defualtTextStyle,
             bodyLarge: defualtTextStyle,
@@ -19,7 +21,7 @@ class AppTheme {
           textStyle:
               MaterialStateTextStyle.resolveWith((states) => defualtTextStyle),
         )),
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             type: BottomNavigationBarType.shifting,
             showSelectedLabels: false,
             showUnselectedLabels: false,

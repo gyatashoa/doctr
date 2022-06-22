@@ -50,11 +50,7 @@ class MakeADiagnosisView extends StatelessWidget {
                     height: 15,
                   ),
                   viewModel.formatSymptoms.isEmpty
-                      ? const Expanded(
-                          child: Center(
-                            child: Text('Empty'),
-                          ),
-                        )
+                      ? const Expanded(child: SizedBox.shrink())
                       : Expanded(
                           child: SingleChildScrollView(
                               physics: const BouncingScrollPhysics(),

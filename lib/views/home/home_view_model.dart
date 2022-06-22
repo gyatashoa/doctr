@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:stream_chat_flutter_core/stream_chat_flutter_core.dart';
 
 class HomeViewModel extends BaseViewModel {
   int _index = 0;
@@ -25,11 +26,12 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> logout(BuildContext context) async {
+  Future<void> logout(StreamChatClient client, BuildContext context) async {
     Provider.of<UserAdditionalDataProvider>(context, listen: false)
         .setUserAddData = null;
-    await _cacheService.deleteUserAddData();
+    client.disconnectUser();
     await _authService.signOut();
+    await _cacheService.deleteUserAddData();
     await _navigationService.clearStackAndShow(Routes.loginView);
   }
 

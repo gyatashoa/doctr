@@ -17,6 +17,7 @@ import '../views/check_diagnosis_history/check_diagnosis_history_view.dart';
 import '../views/check_user_profile/check_user_profile_view.dart';
 import '../views/contribution/contribution_view.dart';
 import '../views/diagnosis_report/diagnosis_report_view.dart';
+import '../views/forgot_password/forgot_password_view.dart';
 import '../views/home/home_view.dart';
 import '../views/login/login_view.dart';
 import '../views/make_a_diagnosis/make_a_diagnosis_view.dart';
@@ -37,6 +38,7 @@ class Routes {
   static const String diagnosisReportView = '/diagnosis-report-view';
   static const String chatView = '/chat-view';
   static const String contributionView = '/contribution-view';
+  static const String forgotPasswordView = '/forgot-password-view';
   static const all = <String>{
     loginView,
     signUpView,
@@ -49,6 +51,7 @@ class Routes {
     diagnosisReportView,
     chatView,
     contributionView,
+    forgotPasswordView,
   };
 }
 
@@ -67,6 +70,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.diagnosisReportView, page: DiagnosisReportView),
     RouteDef(Routes.chatView, page: ChatView),
     RouteDef(Routes.contributionView, page: ContributionView),
+    RouteDef(Routes.forgotPasswordView, page: ForgotPasswordView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -134,6 +138,7 @@ class StackedRouter extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => ChatView(
           key: args.key,
+          otherMemberGender: args.otherMemberGender,
           channel: args.channel,
         ),
         settings: data,
@@ -142,6 +147,12 @@ class StackedRouter extends RouterBase {
     ContributionView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const ContributionView(),
+        settings: data,
+      );
+    },
+    ForgotPasswordView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const ForgotPasswordView(),
         settings: data,
       );
     },
@@ -163,6 +174,8 @@ class DiagnosisReportViewArguments {
 /// ChatView arguments holder class
 class ChatViewArguments {
   final Key? key;
+  final int otherMemberGender;
   final Channel channel;
-  ChatViewArguments({this.key, required this.channel});
+  ChatViewArguments(
+      {this.key, required this.otherMemberGender, required this.channel});
 }
