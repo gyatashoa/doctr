@@ -23,6 +23,7 @@ class NewsSectionViewModel extends FutureViewModel<List<NewsModel>> {
   }
 
   Future<List<NewsModel>> getNewsDataFromServer() async {
+    // throw Exception('error');
     var res = await _apiService.getNews();
     if (res.data != null) {
       List articles = res.data['articles'];

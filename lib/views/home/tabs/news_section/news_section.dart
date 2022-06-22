@@ -16,7 +16,19 @@ class NewsSection extends StatelessWidget {
     return ViewModelBuilder<NewsSectionViewModel>.reactive(
       builder: (context, model, _) {
         if (model.isBusy) {
-          return const CircularProgressIndicator();
+          return SizedBox(
+            height: devSize.height * .3,
+            width: double.infinity,
+            child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                itemCount: null,
+                itemBuilder: (_, i) => const Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 2, horizontal: 8.0),
+                      child: NewsTile.loading(),
+                    )),
+          );
         }
 
         if (model.data != null) {
@@ -37,11 +49,27 @@ class NewsSection extends StatelessWidget {
           );
         }
         if (model.hasError) {
-          return Column(
-            children: [
-              const Text('Error fetching data'),
-              TextButton(onPressed: model.onRetry, child: const Text('Retry'))
-            ],
+          return SizedBox(
+            height: devSize.height * .3,
+            width: double.infinity,
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Error fetching data',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  TextButton(
+                      style:
+                          TextButton.styleFrom(backgroundColor: Colors.white),
+                      onPressed: model.onRetry,
+                      child: const Text('Retry'))
+                ],
+              ),
+            ),
           );
         }
         return Container();
