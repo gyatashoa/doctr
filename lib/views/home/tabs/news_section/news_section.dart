@@ -43,6 +43,7 @@ class NewsSection extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           vertical: 2, horizontal: 8.0),
                       child: NewsTile(
+                        onLaunch: model.onLaunch,
                         news: model.data![i],
                       ),
                     )),
