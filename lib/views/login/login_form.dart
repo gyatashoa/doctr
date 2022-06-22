@@ -119,52 +119,6 @@ class LoginForm extends HookViewModelWidget<LoginViewModel> {
                             fontSize: 18,
                             color: Colors.white),
                       ))),
-        Row(
-          children: const [
-            Expanded(
-              child: Divider(
-                thickness: .2,
-                color: ashColor,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text('OR'),
-            ),
-            Expanded(
-                child: Divider(
-              thickness: .2,
-              color: ashColor,
-            ))
-          ],
-        ),
-        Container(
-          padding: const EdgeInsets.all(5),
-          width: double.infinity,
-          child: TextButton.icon(
-              style: TextButton.styleFrom(
-                  backgroundColor: const Color(0xffF0F5F6)),
-              onPressed:
-                  viewModel.isLoginwithGoogleLoading || viewModel.isLoginLoading
-                      ? null
-                      : () => viewModel.loginWithGooglePressed(),
-              icon: viewModel.isLoginwithGoogleLoading
-                  ? const SizedBox()
-                  : SvgPicture.asset('assets/icons/google_icon.svg',
-                      height: 20, width: 20),
-              label: viewModel.isLoginwithGoogleLoading
-                  ? Transform.scale(
-                      scale: .3,
-                      child: const CircularProgressIndicator(),
-                    )
-                  : const Text(
-                      'Login with Google',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18,
-                          color: Color(0xff374164)),
-                    )),
-        ),
       ],
     );
   }
