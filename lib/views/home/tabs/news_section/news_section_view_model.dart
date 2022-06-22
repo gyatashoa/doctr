@@ -15,7 +15,7 @@ class NewsSectionViewModel extends FutureViewModel<List<NewsModel>> {
 
   @override
   void onData(List<NewsModel>? data) {
-    print(data);
+    // print(data);
   }
 
   void onRetry() {
