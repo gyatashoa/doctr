@@ -1,16 +1,64 @@
-# doctr
+![Logo](https://firebasestorage.googleapis.com/v0/b/doctr-fb5bb.appspot.com/o/app_icon.png?alt=media&token=4542471f-e0b9-49e1-8f83-3a2a3f5bf29f)
 
-A new Flutter project.
+# Doctr Mobile Application
 
-## Getting Started
+A mobile application built with flutter to utilize the
+[https://prediction-disease-test.herokuapp.com/](https://prediction-disease-test.herokuapp.com/) api but also with additional functionality like authentication with
+firebase, data contribution to the model,health news and storing and retrieval of previous diagnosis
 
-This project is a starting point for a Flutter application.
+## Tech Stack Used
 
-A few resources to get you started if this is your first Flutter project:
+**Client:** Flutter
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+**Server:** Firebase, Python(flask)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Installation
+
+Install the application on a mobile(android) device
+
+- Download the release build from [https://github.com/gyatashoa/doctr/releases/download/1.0.0/app-release.apk](https://github.com/gyatashoa/doctr/releases/download/1.0.0/app-release.apk)
+- Run the downloaded apk to install the application
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/gyatashoa/doctr
+```
+
+Go to the project directory
+
+```bash
+  cd doctr-master
+```
+
+Install dependencies
+
+```bash
+  flutter pub run
+```
+
+Set up stream sdk api
+
+- create a file stream_credential.dart in the config folder
+- create two variable named streamKey and secret
+- The value of these varibles should be your stream sdk key and secret
+
+Start the application on a mobile device or an emulator
+
+```bash
+  flutter run
+```
+
+## Authors
+
+- [@Asamoah Yeboah Felix](https://www.github.com/gyatashoa)
+
+## Documentation
+
+[Documentation](https://linktodocumentation)
+
+## 🚀 About Me
+
+My name Asamoah Yeboah Felix, A final year Computer Science student at KNUST
