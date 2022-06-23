@@ -36,7 +36,7 @@ class CloudFirestoreServices {
               toFirestore: (m, _) => m.toJson())
           .get();
       return ApiResponse.data(data: data.data());
-    } on Exception catch (e) {
+    } on Exception {
       return ApiResponse.error(
         exception: CloudFirestoreException(
             message: 'Error while uploading data to firebase',
@@ -141,8 +141,7 @@ class CloudFirestoreServices {
               toFirestore: (m, _) => m.toJson())
           .get();
       return ApiResponse.data(data: res.docs.map((e) => e.data()).toList());
-    } on Exception catch (e) {
-      print(e);
+    } on Exception {
       return ApiResponse.error(
         exception: CloudFirestoreException(
             message: 'Error while uploading data to firebase',

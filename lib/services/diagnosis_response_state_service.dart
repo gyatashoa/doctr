@@ -3,6 +3,7 @@ import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 
 class DiagnosisResponseStateService with ReactiveServiceMixin {
+  // ignore: prefer_final_fields
   RxValue<List<DiagnosisResponseModel>> _data = RxValue([]);
 
   DiagnosisResponseStateService() {

@@ -15,7 +15,6 @@ class MakeADiagnosisViewModel extends FormViewModel {
   bool loading = false;
   final _snackbarService = locator<SnackbarService>();
   final _apiService = locator<ApiServices>();
-  final _dialogService = locator<DialogService>();
   final _cacheService = locator<CacheServices>();
   final _cloudFirestoreServices = locator<CloudFirestoreServices>();
   final _diagnosisResponseStateService =
@@ -45,9 +44,6 @@ class MakeADiagnosisViewModel extends FormViewModel {
         _cacheService.saveSymtoms(data);
         return;
       }
-
-      //if error show error dialog
-      print(res.exception!.message);
     }
   }
 

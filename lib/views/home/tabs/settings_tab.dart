@@ -1,4 +1,4 @@
-// ignore_for_file: constant_identifier_names
+// ignore_for_file: constant_identifier_names, avoid_renaming_method_parameters
 
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
@@ -61,7 +61,7 @@ enum SettingsTiles {
 }
 
 extension on SettingsTiles {
-  String repr() => this.toString().split('.').last.replaceAll(RegExp('_'), ' ');
+  String repr() => toString().split('.').last.replaceAll(RegExp('_'), ' ');
 
   void navigate(HomeViewModel viewModel, BuildContext context) {
     switch (this) {

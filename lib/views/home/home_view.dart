@@ -2,7 +2,6 @@ import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/home/home_view_model.dart';
 import 'package:doctr/views/home/tabs/tabs.dart';
 import 'package:doctr/widgets/fade_index_stack_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:stacked/stacked.dart';

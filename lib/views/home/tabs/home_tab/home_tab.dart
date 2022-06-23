@@ -1,8 +1,6 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
-import 'package:doctr/models/news_model.dart';
 import 'package:doctr/services/auth_services.dart';
-import 'package:doctr/views/home/home_view_model.dart';
 import 'package:doctr/views/home/tabs/home_tab/home_tab_view_model.dart';
 import 'package:doctr/views/home/tabs/news_section/news_section.dart';
 import 'package:doctr/widgets/emoji_btn.dart';
@@ -10,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_hooks/stacked_hooks.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class HomeTab extends StatelessWidget {
@@ -74,7 +71,7 @@ class HomeTab extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    NewsSection()
+                    const NewsSection()
                   ],
                 ),
                 AnimatedSwitcher(
@@ -179,7 +176,8 @@ class _DiseaseTextField extends StatelessWidget {
     return Container(
       width: devSize.width,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18), color: Color(0xff2D84C8)),
+          borderRadius: BorderRadius.circular(18),
+          color: const Color(0xff2D84C8)),
       child: Padding(
         padding: const EdgeInsets.all(18.0),
         child: Row(

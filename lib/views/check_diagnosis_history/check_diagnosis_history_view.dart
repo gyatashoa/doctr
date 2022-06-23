@@ -1,7 +1,6 @@
 import 'package:doctr/theme/colors.dart';
 import 'package:doctr/views/check_diagnosis_history/body.dart';
 import 'package:doctr/views/check_diagnosis_history/check_diagnosis_history_view_model.dart';
-import 'package:doctr/widgets/diagnosis_expansion_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';

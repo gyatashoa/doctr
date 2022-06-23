@@ -2,6 +2,7 @@ import 'package:observable_ish/observable_ish.dart';
 import 'package:stacked/stacked.dart';
 
 class SymptomsStateService with ReactiveServiceMixin {
+  // ignore: prefer_final_fields
   RxValue<List<String>> _data = RxValue([]);
 
   SymptomsStateService() {

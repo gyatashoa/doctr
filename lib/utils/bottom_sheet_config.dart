@@ -66,11 +66,11 @@ class _FloatingBoxBottomSheetState extends State<_FloatingBoxBottomSheet> {
   @override
   void initState() {
     isLoading = false;
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final devSize = MediaQuery.of(context).size;
     return Container(
       // height: devSize.height * .2,
       margin: const EdgeInsets.all(25),
@@ -136,7 +136,6 @@ class _FloatingBoxBottomWithTextFieldSync extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final devSize = MediaQuery.of(context).size;
     return Container(
       // height: devSize.height * .2,
       margin: const EdgeInsets.all(25),

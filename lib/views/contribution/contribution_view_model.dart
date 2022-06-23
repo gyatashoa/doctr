@@ -25,6 +25,7 @@ class ContributionViewModel extends BaseViewModel {
     if (_prescriptions.isEmpty) return 'Please add a prescription';
     if (disease == null) return 'Please add a disease';
     if (disease != null && disease!.isEmpty) return 'Please add a disease';
+    return null;
   }
 
   Future<void> onContribute() async {

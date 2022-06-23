@@ -1,7 +1,6 @@
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
 import 'package:doctr/models/gender.dart';
-import 'package:doctr/models/user_additional_data_model.dart';
 import 'package:doctr/models/user_type.dart';
 import 'package:doctr/providers/user_additional_data_provider.dart';
 import 'package:doctr/services/auth_services.dart';
@@ -49,13 +48,15 @@ class ChatTab extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class ContactsPage extends StatelessWidget {
   ContactsPage({Key? key}) : super(key: key);
-  AuthServices _authServices = locator<AuthServices>();
+  final AuthServices _authServices = locator<AuthServices>();
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<UserAdditionalDataProvider>(context);
+    // ignore: deprecated_member_use
     return UserListCore(
       limit: 20,
       filter: Filter.and([

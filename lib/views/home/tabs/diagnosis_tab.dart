@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/app/app.router.dart';
 import 'package:doctr/models/user_type.dart';
@@ -13,6 +15,7 @@ class DiagnosisTab extends ViewModelWidget<HomeViewModel> {
   const DiagnosisTab({Key? key}) : super(key: key, reactive: false);
 
   @override
+  // ignore: avoid_renaming_method_parameters
   Widget build(BuildContext context, HomeViewModel model) {
     var provider = Provider.of<UserAdditionalDataProvider>(context);
 
@@ -74,7 +77,7 @@ enum DiagnosisTiles {
 }
 
 extension on DiagnosisTiles {
-  String repr() => this.toString().split('.').last.replaceAll(RegExp('_'), ' ');
+  String repr() => toString().split('.').last.replaceAll(RegExp('_'), ' ');
 
   void onTap(HomeViewModel model) {
     var navigationService = locator<NavigationService>();
