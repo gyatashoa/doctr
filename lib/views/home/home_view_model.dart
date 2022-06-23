@@ -37,9 +37,9 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> aboutThisApp(BuildContext context) async {
     showAboutDialog(
-      context: context,
-      applicationVersion: '1.0.0',
-    );
+        context: context,
+        applicationVersion: '1.0.0',
+        applicationIcon: Image.asset('assets/icons/app_icon.png'));
   }
 
   void checkUserProfile() {

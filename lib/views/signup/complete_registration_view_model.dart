@@ -38,9 +38,7 @@ class CompleteRegistrationViewModel extends FormViewModel {
   }
 
   @override
-  void setFormStatus() {
-    // TODO: implement setFormStatus
-  }
+  void setFormStatus() {}
 
   String? _isFormValid() {
     if (dob == null) return 'Please date of birth is required';

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:doctr/app/app.locator.dart';
 import 'package:doctr/models/news_model.dart';
 import 'package:doctr/services/api_services.dart';

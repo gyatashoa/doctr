@@ -20,19 +20,12 @@ class LoginViewModel extends FormViewModel {
 
   bool _viewPassword = false;
   bool _loginloading = false;
-  bool _loginwithGoogleloading = false;
 
   bool get viewPassword => _viewPassword;
   bool get isLoginLoading => _loginloading;
-  bool get isLoginwithGoogleLoading => _loginwithGoogleloading;
 
   set setLoginLoading(bool val) {
     _loginloading = val;
-    notifyListeners();
-  }
-
-  set setLoginWithGoogleLoading(bool val) {
-    _loginwithGoogleloading = val;
     notifyListeners();
   }
 
@@ -58,21 +51,6 @@ class LoginViewModel extends FormViewModel {
         .setUserAddData = result;
     return _navigationServices.pushNamedAndRemoveUntil(Routes.homeView,
         predicate: ((route) => true));
-  }
-
-  Future loginWithGooglePressed() async {
-    setLoginWithGoogleLoading = true;
-    var res;
-    try {
-      res = await _authServices.loginWithGoogle();
-    } catch (e) {}
-    setLoginWithGoogleLoading = false;
-    if (res == null) return;
-    if (res is String) {
-      return _dialogServices.showDialog(title: 'Error', description: res);
-    }
-    return _navigationServices.pushNamedAndRemoveUntil(Routes.homeView,
-        predicate: ((route) => false));
   }
 
   set viewPassword(bool view) {

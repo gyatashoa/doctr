@@ -14,7 +14,6 @@ import 'package:doctr/theme/app_theme.dart';
 import 'package:doctr/utils/bottom_sheet_config.dart';
 import 'package:doctr/utils/dialog_config.dart';
 import 'package:doctr/utils/snackbar_config.dart';
-import 'package:doctr/views/forgot_password/forgot_password_view.dart';
 import 'package:doctr/views/home/home_view.dart';
 import 'package:doctr/views/login/login_view.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -80,7 +79,9 @@ class MyApp extends StatelessWidget {
         builder: (context, child) {
           return StreamChatCore(
             client: client,
+            // ignore: deprecated_member_use
             child: ChannelsBloc(
+              // ignore: deprecated_member_use
               child: UsersBloc(
                 child: child!,
               ),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:doctr/config/constants.dart';
 import 'package:doctr/exceptions/api_exceptions.dart';
@@ -20,7 +18,7 @@ class ApiServices {
     try {
       var response = await _dio.get(NEWS_API_URL + NEWS_API_KEY);
       return ApiResponse.data(data: response.data);
-    } on Exception catch (e) {
+    } on Exception {
       return ApiResponse.error(
           exception: ApiException(
               'Error while fectching ', 'Error while fetching data!!'));
@@ -41,7 +39,7 @@ class ApiServices {
       return ApiResponse.data(data: response.data);
     } on UrlNotFoundException catch (e) {
       return ApiResponse.error(exception: e);
-    } on Exception catch (e) {
+    } on Exception {
       return ApiResponse.error(
           exception: ApiException(
               'Error while fectching ', 'Error while fetching data!!'));
@@ -65,7 +63,7 @@ class ApiServices {
       return ApiResponse.data(data: response.data);
     } on UrlNotFoundException catch (e) {
       return ApiResponse.error(exception: e);
-    } on Exception catch (e) {
+    } on Exception {
       return ApiResponse.error(
           exception: ApiException(
               'Error while fetching data', 'Error while fetching data!!'));

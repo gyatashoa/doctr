@@ -4,7 +4,6 @@ import 'package:doctr/views/make_a_diagnosis/make_a_diagnosis_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 
 class MakeADiagnosisView extends StatelessWidget {
   const MakeADiagnosisView({Key? key}) : super(key: key);

@@ -16,9 +16,9 @@ class SignUpViewModel extends FormViewModel {
 
   String? _isFormValid(String name, String email, String pass, String pass1) {
     if (name.trim().length < 2) return 'Please name is required';
-    //TODO: will use a package to check for email valid
-    if (!(email.contains('@') || email.contains('.')))
+    if (!(email.contains('@') || email.contains('.'))) {
       return 'Enter a valid email';
+    }
     if (pass.length < 6) return 'Password length can\'t be lesser than 6';
     if (pass != pass1) return 'Password do not match';
     return null;
