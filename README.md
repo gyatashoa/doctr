@@ -36,7 +36,7 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  flutter pub run
+  flutter pub get
 ```
 
 Set up stream sdk api
