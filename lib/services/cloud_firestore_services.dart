@@ -4,6 +4,7 @@ import 'package:doctr/exceptions/cloud_firestore_exception.dart';
 import 'package:doctr/models/api_response.dart';
 import 'package:doctr/models/diagnosis_response_model.dart';
 import 'package:doctr/models/user_additional_data_model.dart';
+import 'package:doctr/models/user_type.dart';
 import 'package:doctr/services/auth_services.dart';
 
 class CloudFirestoreServices {
@@ -51,6 +52,14 @@ class CloudFirestoreServices {
 
     var ref = _instance.collection(userCollection);
     try {
+      if (data.userType == UserType.doctor) {
+        var res = await _checkDoctorIdValidity(data.docId);
+        if (res != null) {
+          return ApiResponse.error(
+              exception: CloudFirestoreException(
+                  details: 'The doctor id entered is not valid', message: res));
+        }
+      }
       await ref.doc(uid).set(data.toJson);
       return ApiResponse.data(data: data);
     } on Exception {
@@ -59,6 +68,16 @@ class CloudFirestoreServices {
             message: 'Error while uploading data to firebase',
             details: 'Unable to upload data to firebase'),
       );
+    }
+  }
+
+  Future<String?> _checkDoctorIdValidity(String? doctorId) async {
+    var res = await _instance
+        .collection('DoctorId')
+        .where('doctorId', isEqualTo: doctorId)
+        .get();
+    if (res.docs.isEmpty) {
+      return 'Invalid doctor Id';
     }
   }
 

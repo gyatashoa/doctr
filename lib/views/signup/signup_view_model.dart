@@ -11,6 +11,13 @@ class SignUpViewModel extends FormViewModel {
   final _dialogService = locator<DialogService>();
   final _navigationService = locator<NavigationService>();
 
+  bool agreed = false;
+
+  void onAgreementChanged(bool? val) {
+    agreed = val ?? agreed;
+    notifyListeners();
+  }
+
   @override
   void setFormStatus() {}
 
@@ -30,6 +37,11 @@ class SignUpViewModel extends FormViewModel {
       return _snackBarService.showCustomSnackBar(
           variant: SnackbarVariant.error, message: msg);
     }
+    if (!agreed) {
+      return _snackBarService.showCustomSnackBar(
+          variant: SnackbarVariant.error,
+          message: 'Please you have agree to the terms and conditions');
+    }
     setBusy(true);
     var res =
         await _authService.signUp(email: email, name: name, password: pass);
@@ -41,5 +53,11 @@ class SignUpViewModel extends FormViewModel {
     //navigate to complete registration view
     _navigationService.pushNamedAndRemoveUntil(Routes.completeRegistrationView,
         predicate: (_) => false);
+  }
+
+  void readTerms() {}
+
+  void onRead() {
+    _navigationService.navigateTo(Routes.termsAndConditions);
   }
 }
