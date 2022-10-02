@@ -16,7 +16,7 @@ firebase, data contribution to the model,health news and storing and retrieval o
 
 Install the application on a mobile(android) device
 
-- Download the release build from [https://github.com/gyatashoa/doctr/releases/download/1.0.0/app-release.apk](https://github.com/gyatashoa/doctr/releases/download/1.0.0/app-release.apk)
+- Download the release build from [https://github.com/gyatashoa/doctr/releases/download/1.0.1/app-release.apk](https://github.com/gyatashoa/doctr/releases/download/1.0.0/app-release.apk)
 - Run the downloaded apk to install the application
 
 ## Run Locally
